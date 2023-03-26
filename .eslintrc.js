@@ -48,6 +48,6 @@ module.exports = {
     'react/prop-types': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     'no-unused-vars': 'warn',
-    'no-console': 'warn',
+    // 'no-console': 'warn',
   },
 };
