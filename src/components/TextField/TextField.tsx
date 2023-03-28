@@ -11,7 +11,7 @@ export function TextField({
   onChange,
   errorText,
 }: TextFieldProps) {
-  const onInputChange: ChangeEventHandler<HTMLInputElement> = (e) => onChange(e.target.value);
+  const onInputChange: ChangeEventHandler<HTMLInputElement> = (evt) => onChange(evt.target.value);
 
   return (
     <div className={`mb-3 ${containerClassName}`}>

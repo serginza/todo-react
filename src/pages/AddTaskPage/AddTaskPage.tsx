@@ -5,7 +5,7 @@ import { PageContainer } from 'components/index';
 export function AddTaskPage() {
   return (
     <PageContainer>
-      <h1>TODO LIST | ADD TASK</h1>
+      <h1 className="text-center">TODO LIST | ADD TASK</h1>
       <AddTask />
     </PageContainer>
   );

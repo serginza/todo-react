@@ -2,7 +2,7 @@ import React, { ChangeEventHandler } from 'react';
 import { CheckboxProps } from './Checkbox.types';
 
 export function Checkbox({ label, checked, onChange, disabled, containerClassName = '' }: CheckboxProps) {
-  const onCheckboxChange: ChangeEventHandler<HTMLInputElement> = (e) => onChange(e.target.checked);
+  const onCheckboxChange: ChangeEventHandler<HTMLInputElement> = (evt) => onChange(evt.target.checked);
 
   return (
     <div className={`form-check mb-3 ${containerClassName}`}>

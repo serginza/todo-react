@@ -1,1 +1,1 @@
-export * from './EditTask';
+export * from './EditTask.module';

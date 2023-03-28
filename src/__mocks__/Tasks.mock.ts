@@ -1,9 +1,9 @@
 import { TaskEntity, TasksStatsEntity } from 'domains/index';
 
 export const TasksStatsMock: TasksStatsEntity = {
-  total: 5,
-  important: 4,
-  done: 10,
+  total: 4,
+  important: 2,
+  done: 1,
 };
 
 export const TasksMock: TaskEntity[] = [
@@ -18,7 +18,7 @@ export const TasksMock: TaskEntity[] = [
     name: 'Clean',
     id: '51',
     info: 'Lorem ipsum',
-    isImportant: true,
+    isImportant: false,
     isDone: false,
   },
   {
@@ -32,7 +32,7 @@ export const TasksMock: TaskEntity[] = [
     name: 'Make',
     id: '53',
     info: 'Lorem ipsum dolor sit amet',
-    isImportant: false,
+    isImportant: true,
     isDone: false,
   },
 ];
