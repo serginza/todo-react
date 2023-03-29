@@ -17,6 +17,8 @@ export function SearchForm() {
     setFilterType(type);
   };
 
+  const onResetValue = () => setSearchValue('');
+
   const onSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     setSearchValue('');
@@ -26,7 +28,7 @@ export function SearchForm() {
 
   return (
     <form className="search-form d-flex justify-content-between">
-      <SearchInput value={searchValue} onChange={onSearchInputChange} />
+      <SearchInput value={searchValue} onChange={onSearchInputChange} onReset={onResetValue} />
       <StatusFilter tasksType={filterType} onChange={onFilterChange} />
       <button type="submit" className="btn btn-primary" onClick={onSubmit}>
         Find
