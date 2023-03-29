@@ -14,4 +14,9 @@ export interface TasksStatsEntity {
   done: number;
 }
 
+export interface SearchFormEntity {
+  searchValue: string;
+  filterType: string;
+}
+
 export type FiltersType = typeof FILTER_TYPES[keyof typeof FILTER_TYPES];

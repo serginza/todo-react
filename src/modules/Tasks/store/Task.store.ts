@@ -1,7 +1,7 @@
 import { action, makeObservable, observable } from 'mobx';
 import { PrivateFieldProps } from './Task.store.types';
-import { TaskEntity, TasksStatsEntity } from 'domains/index';
-import { TasksMock } from '__mocks__/index';
+import { TaskEntity, TasksStatsEntity, SearchFormEntity } from 'domains/index';
+import { TasksMock, TasksStatsMock } from '__mocks__/index';
 
 class TasksStore {
   constructor() {
@@ -27,9 +27,15 @@ class TasksStore {
     done: 0,
   };
 
-  get tasksStats(): TasksStatsEntity | null {
+  get tasksStats(): TasksStatsEntity {
     return this._tasksStats;
   }
+
+  getTasks = async (taskValues?: SearchFormEntity) => {
+    this._tasks = TasksMock;
+    this._tasksStats = TasksStatsMock;
+    console.log(taskValues);
+  };
 }
 
-export const StoreInstance = new TasksStore();
+export const TasksStoreInstance = new TasksStore();
