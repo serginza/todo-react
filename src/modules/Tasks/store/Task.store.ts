@@ -6,18 +6,20 @@ import { TasksMock, TasksStatsMock } from '__mocks__/index';
 class TasksStore {
   constructor() {
     makeObservable<this, PrivateFieldProps>(this, {
-      _tasksStats: observable,
       _tasks: observable,
+      _tasksStats: observable,
+      _isTasksLoading: observable,
 
-      // changeTaskImportant: action,
-      // changeTaskCompleted: action,
-      // deleteTask: action,
+      loadTasks: action,
+      changeTaskImportant: action,
+      changeTaskCompleted: action,
+      deleteTask: action,
     });
   }
 
-  private _tasks: TaskEntity[] | null = [];
+  private _tasks: TaskEntity[] = [];
 
-  get tasks(): TaskEntity[] | null {
+  get tasks(): TaskEntity[] {
     return this._tasks;
   }
 
@@ -31,10 +33,37 @@ class TasksStore {
     return this._tasksStats;
   }
 
-  getTasks = async (taskValues?: SearchFormEntity) => {
+  private _isTasksLoading = false;
+
+  get isTasksLoading(): boolean {
+    return this._isTasksLoading;
+  }
+
+  loadTasks = async (taskValues?: SearchFormEntity) => {
+    this._isTasksLoading = true;
     this._tasks = TasksMock;
     this._tasksStats = TasksStatsMock;
-    console.log(taskValues);
+
+    // console.log(taskValues);
+    this._isTasksLoading = false;
+  };
+
+  changeTaskImportant = (taskId: TaskEntity['id'], currentStatus: boolean) => {
+    this._isTasksLoading = true;
+    console.log(`Task id = ${taskId}, important = ${!currentStatus}`);
+    this.loadTasks();
+  };
+
+  changeTaskCompleted = (taskId: TaskEntity['id'], currentStatus: boolean) => {
+    this._isTasksLoading = true;
+    console.log(`Task id = ${taskId}, comlpete = ${!currentStatus}`);
+    this.loadTasks();
+  };
+
+  deleteTask = (taskId: TaskEntity['id']) => {
+    this._isTasksLoading = true;
+    console.log(`Task id = ${taskId} deleted!`);
+    this.loadTasks();
   };
 }
 
