@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { TaskProps } from './Task.types';
 import { EDIT, ROOT } from 'constants/index';
-// import { TasksStoreInstance } from 'modules/Tasks/store';
 import './Task.css';
 
 export function Task({ task, changeTaskImportant, changeTaskCompleted, deleteTask }: TaskProps) {

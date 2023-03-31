@@ -2,6 +2,7 @@ import { action, makeObservable, observable } from 'mobx';
 import { PrivateFieldProps } from './Task.store.types';
 import { TaskEntity, TasksStatsEntity, SearchFormEntity } from 'domains/index';
 import { TasksMock, TasksStatsMock } from '__mocks__/index';
+import { delay } from 'helpers/index';
 
 class TasksStore {
   constructor() {
@@ -39,12 +40,14 @@ class TasksStore {
     return this._isTasksLoading;
   }
 
-  loadTasks = async (taskValues?: SearchFormEntity) => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  loadTasks = async (searchValues?: SearchFormEntity) => {
     this._isTasksLoading = true;
     this._tasks = TasksMock;
     this._tasksStats = TasksStatsMock;
 
-    // console.log(taskValues);
+    await delay(1000);
+    // console.log(`Search: ${searchValues}`);
     this._isTasksLoading = false;
   };
 

@@ -1,22 +1,30 @@
 import React from 'react';
 import { observer } from 'mobx-react';
-// import { TasksStatsProps } from './TasksStats.types';
 import { TasksStoreInstance } from 'modules/Tasks/store';
+import { Loader } from 'components/Loader';
 
-// export function TasksStats({ total, important, done }: TasksStatsProps) {
 function TasksStatsProto() {
-  const { tasksStats } = TasksStoreInstance;
+  const { tasksStats, isTasksLoading } = TasksStoreInstance;
 
   return (
     <div className="d-flex w-100 justify-content-between">
       <p>
-        Total: <span className="badge bg-secondary">{tasksStats.total}</span>
+        Total:
+        <Loader isLoading={isTasksLoading} variant="dot">
+          <span className="badge bg-secondary">{` ${tasksStats.total}`}</span>
+        </Loader>
       </p>
       <p>
-        Important: <span className="badge bg-secondary">{tasksStats.important}</span>
+        Important:
+        <Loader isLoading={isTasksLoading} variant="dot">
+          <span className="badge bg-secondary">{` ${tasksStats.important}`}</span>
+        </Loader>
       </p>
       <p>
-        Done: <span className="badge bg-secondary">{tasksStats.done}</span>
+        Done:
+        <Loader isLoading={isTasksLoading} variant="dot">
+          <span className="badge bg-secondary">{` ${tasksStats.done}`}</span>
+        </Loader>
       </p>
     </div>
   );
