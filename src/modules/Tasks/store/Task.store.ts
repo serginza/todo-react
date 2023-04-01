@@ -45,7 +45,6 @@ class TasksStore {
     this._isTasksLoading = true;
     this._tasks = TasksMock;
     this._tasksStats = TasksStatsMock;
-
     await delay(1000);
     // console.log(`Search: ${searchValues}`);
     this._isTasksLoading = false;
