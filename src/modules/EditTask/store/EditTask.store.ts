@@ -13,7 +13,9 @@ class EditTaskStore {
       editTaskProps: computed,
       isEditTaskLoading: computed,
 
+      changeTask: action,
       loadEditTask: action,
+      getEditProps: action,
     });
   }
 
@@ -32,6 +34,12 @@ class EditTaskStore {
     this._editTaskProps = task;
   }
 
+  private _isEditTaskLoading = false;
+
+  get isEditTaskLoading(): boolean {
+    return this._isEditTaskLoading;
+  }
+
   changeTask(key: string, value: unknown) {
     this.editTaskProps = {
       ...this.editTaskProps,
@@ -39,23 +47,32 @@ class EditTaskStore {
     };
   }
 
-  private _isEditTaskLoading = false;
+  loadEditTask = async () => {
+    try {
+      this._isEditTaskLoading = true;
 
-  get isEditTaskLoading(): boolean {
-    return this._isEditTaskLoading;
-  }
+      await delay(1000);
+      console.log(`
+      TaskName: ${this.editTaskProps.name}
+      TaskDescription: ${this.editTaskProps.info},
+      TaskCheckImportant: ${this.editTaskProps.isImportant},
+      TaskCheckDone ${this.editTaskProps.isDone}
+    `);
+    } catch {
+      console.log('Error of changing task!');
+    } finally {
+      this._isEditTaskLoading = false;
+    }
+  };
 
-  loadEditTask = async (taskId?: string) => {
-    this._isEditTaskLoading = true;
+  getEditProps(taskId?: string) {
     const task = TasksMock.find((task) => task.id === taskId);
     if (task) {
       this._editTaskProps = task;
     }
-
-    await delay(1000);
-    console.log(task);
-    this._isEditTaskLoading = false;
-  };
+    this.loadEditTask();
+    // console.log(task);
+  }
 }
 
 export const EditTaskInstance = new EditTaskStore();

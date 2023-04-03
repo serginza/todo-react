@@ -15,6 +15,12 @@ export interface EditTaskEntity {
   isDone: boolean;
 }
 
+export interface AddTaskEntity {
+  taskName: string;
+  taskDescription: string;
+  taskCheckImportant: boolean;
+}
+
 export interface TasksStatsEntity {
   total: number;
   important: number;

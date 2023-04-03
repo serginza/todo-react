@@ -2,11 +2,11 @@ import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { EditTasksProps } from './EditTask.types';
 import { EditTaskInstance } from './store';
-import { EditTaskForm } from './components';
+import { EditTaskForm } from './components/EditTaskForm';
 
 function EditTaskProto({ taskId }: EditTasksProps) {
   useEffect(() => {
-    EditTaskInstance.loadEditTask(taskId);
+    EditTaskInstance.getEditProps(taskId);
   }, []);
 
   return <EditTaskForm />;

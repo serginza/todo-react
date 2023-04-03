@@ -1,10 +1,15 @@
 import React, { MouseEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
-import { EditTaskInstance } from '../store';
+import { EditTaskInstance } from 'modules/EditTask/store';
 import { TextField, Checkbox, Loader } from 'components/index';
+import { ROOT } from 'constants/path';
+import './editTaskForm.css';
 
 function EditTaskFormProto() {
-  const { editTaskProps, isEditTaskLoading } = EditTaskInstance;
+  const redirectRoot = useNavigate();
+
+  const { editTaskProps, isEditTaskLoading, loadEditTask } = EditTaskInstance;
 
   const onInputTaskName = (value: string) => {
     EditTaskInstance.changeTask('name', value);
@@ -24,11 +29,16 @@ function EditTaskFormProto() {
 
   const onSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    console.log(editTaskProps.name, editTaskProps.info, editTaskProps.isImportant, editTaskProps.isDone);
+    try {
+      loadEditTask().then(() => redirectRoot(ROOT));
+    } catch {
+      console.log('Error of changing data!');
+    }
+    // console.log(editTaskProps.name, editTaskProps.info, editTaskProps.isImportant, editTaskProps.isDone);
   };
 
   return (
-    <form>
+    <form className="edit-task-form">
       <Loader isLoading={isEditTaskLoading} variant="circle">
         <TextField label={'Task name'} onChange={onInputTaskName} inputType="text" value={editTaskProps.name} />
         <TextField
