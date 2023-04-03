@@ -42,12 +42,21 @@ class TasksStore {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   loadTasks = async (searchValues?: SearchFormEntity) => {
-    this._isTasksLoading = true;
-    this._tasks = TasksMock;
-    this._tasksStats = TasksStatsMock;
-    await delay(1000);
-    // console.log(`Search: ${searchValues}`);
-    this._isTasksLoading = false;
+    try {
+      this._isTasksLoading = true;
+      this._tasks = TasksMock;
+      this._tasksStats = TasksStatsMock;
+
+      await delay(1000);
+
+      if (searchValues) {
+        console.log(searchValues);
+      }
+    } catch {
+      console.log('Error of exporn search info!');
+    } finally {
+      this._isTasksLoading = false;
+    }
   };
 
   changeTaskImportant = (taskId: TaskEntity['id'], currentStatus: boolean) => {

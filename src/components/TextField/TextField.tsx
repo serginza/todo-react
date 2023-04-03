@@ -14,7 +14,7 @@ export function TextField({
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (evt) => onChange(evt.target.value);
 
   return (
-    <div className={`mb-3 ${containerClassName}`}>
+    <div className={`mb-3 w-100 ${containerClassName}`}>
       <label htmlFor={label} className="form-label">
         {label}
       </label>

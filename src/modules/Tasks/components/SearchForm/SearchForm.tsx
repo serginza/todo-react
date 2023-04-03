@@ -1,48 +1,70 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 import { observer } from 'mobx-react-lite';
+import { Controller, useForm } from 'react-hook-form';
+// import { yupResolver } from '@hookform/resolvers/yup';
 import { StatusFilter } from '../StatusFilter';
+import { DEFAULT_SEARCH_FORM } from './SearchForm.constants';
 import { SearchInput } from 'components/index';
-import { FILTER_TYPES } from 'constants/index';
-import { FiltersType } from 'domains/index';
+import { FiltersType, SearchFormEntity } from 'domains/index';
 import { TasksStoreInstance } from 'modules/Tasks/store';
 import './SearchForm.css';
 
 function SearchFormProto() {
   const { isTasksLoading, loadTasks } = TasksStoreInstance;
+  const { control, handleSubmit, setValue, reset } = useForm<SearchFormEntity>({
+    defaultValues: DEFAULT_SEARCH_FORM,
+    // resolver: yupResolver(SEARCH_INPUT_VALIDATION_SCHEMA),
+  });
 
-  const [filterType, setFilterType] = useState<FiltersType>(FILTER_TYPES.ALL);
-  const [searchValue, setSearchValue] = useState<string>('');
+  // const [filterType, setFilterType] = useState<FiltersType>(FILTER_TYPES.ALL);
+  // const [searchValue, setSearchValue] = useState<string>('');
 
-  const onSearchInputChange = (value: string) => {
-    setSearchValue(value);
-  };
+  // const onSearchInputChange = (value: string) => {
+  //   setSearchValue(value);
+  // };
 
-  const onFilterChange = (type: FiltersType) => {
-    setFilterType(type);
-  };
+  // const onFilterChange = (type: FiltersType) => {
+  //   setFilterType(type);
+  // };
 
-  const onResetValue = () => setSearchValue('');
+  // const onResetValue = () => setSearchValue('');
 
   const onSubmit = async (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
-    await loadTasks({
-      searchValue,
-      filterType,
-    });
-    setSearchValue('');
-    setFilterType(FILTER_TYPES.ALL);
-    console.log(`search: ${searchValue}, in section ${filterType}`);
+    handleSubmit((form) => {
+      loadTasks(form);
+      reset();
+    })();
+    // setSearchValue('');
+    // setFilterType(FILTER_TYPES.ALL);
+    // console.log(`search: ${searchValue}, in section ${filterType}`);
   };
+
+  const onTasksTypeChange = (tasksType: FiltersType) => setValue('filterType', tasksType);
+  const onSearchInputChange = (searchText: string) => setValue('searchValue', searchText);
+  const onSearchInputReset = () => setValue('searchValue', '');
 
   return (
     <form className="search-form d-flex justify-content-between">
-      <SearchInput
-        disabled={isTasksLoading}
-        value={searchValue}
-        onChange={onSearchInputChange}
-        onReset={onResetValue}
+      <Controller
+        control={control}
+        name="searchValue"
+        render={({ field }) => (
+          <SearchInput
+            disabled={isTasksLoading}
+            value={field.value}
+            onChange={onSearchInputChange}
+            onReset={onSearchInputReset}
+          />
+        )}
       />
-      <StatusFilter tasksType={filterType} onChange={onFilterChange} disabled={isTasksLoading} />
+      <Controller
+        control={control}
+        name="filterType"
+        render={({ field }) => (
+          <StatusFilter tasksType={field.value} onChange={onTasksTypeChange} disabled={isTasksLoading} />
+        )}
+      />
       <button type="submit" className="btn btn-primary" onClick={onSubmit} disabled={isTasksLoading}>
         Find
       </button>

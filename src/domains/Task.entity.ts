@@ -29,7 +29,7 @@ export interface TasksStatsEntity {
 
 export interface SearchFormEntity {
   searchValue: string;
-  filterType: string;
+  filterType: FiltersType;
 }
 
 export type FiltersType = typeof FILTER_TYPES[keyof typeof FILTER_TYPES];
