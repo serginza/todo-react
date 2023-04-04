@@ -16,9 +16,9 @@ class AddTaskStore {
   }
 
   private _addTaskProps: AddTaskEntity = {
-    taskName: '',
-    taskDescription: '',
-    taskCheckImportant: false,
+    name: '',
+    info: '',
+    isImportant: false,
   };
 
   get addTaskProps(): AddTaskEntity {

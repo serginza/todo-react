@@ -16,9 +16,9 @@ export interface EditTaskEntity {
 }
 
 export interface AddTaskEntity {
-  taskName: string;
-  taskDescription: string;
-  taskCheckImportant: boolean;
+  name: string;
+  info: string;
+  isImportant: boolean;
 }
 
 export interface TasksStatsEntity {

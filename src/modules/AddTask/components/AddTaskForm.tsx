@@ -1,62 +1,79 @@
-import React, { useState, MouseEvent } from 'react';
+import React, { MouseEvent } from 'react';
 import { observer } from 'mobx-react';
+import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { AddTaskInstance } from '../store';
+import { DEFAULT_ADD_TASK_FORM, ADD_TASK_INPUT_VALIDATION_SCHEMA } from './AddTaskForm.constants';
 import { TextField, Checkbox } from 'components/index';
 import { ROOT } from 'constants/index';
+import { AddTaskEntity } from 'domains/Task.entity';
 
 function AddTaskFormProto() {
   const redirectRoot = useNavigate();
 
   const { loadAddTask } = AddTaskInstance;
 
-  const [taskName, setTaskName] = useState('');
-  const [taskDescription, setTaskDescription] = useState('');
-  const [taskCheckImportant, setTaskCheckImportant] = useState(false);
-
-  const onInputTaskName = (value: string) => {
-    setTaskName(value);
-  };
-
-  const onInputTaskDescription = (value: string) => {
-    setTaskDescription(value);
-  };
-
-  const onInputTaskCheckImportant = (value: boolean) => {
-    setTaskCheckImportant(value);
-  };
-
-  // const values = { taskName, taskDescription, taskCheckImportant };
+  const { control, handleSubmit, setValue, reset } = useForm<AddTaskEntity>({
+    defaultValues: DEFAULT_ADD_TASK_FORM,
+    resolver: yupResolver(ADD_TASK_INPUT_VALIDATION_SCHEMA),
+  });
 
   const onSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     try {
-      loadAddTask({ taskName, taskDescription, taskCheckImportant }).then(() => {
-        redirectRoot(ROOT);
-      });
+      handleSubmit((addTaskPaarams) => {
+        loadAddTask(addTaskPaarams).then(() => {
+          redirectRoot(ROOT);
+        });
+        reset();
+      })();
     } catch {
       console.log('Error of requiring data!');
     }
-    // console.log({ taskName, taskDescription, taskCheckImportant });
   };
+
+  const onInputTaskName = (taskName: string) => setValue('name', taskName);
+  const onInputTaskDescription = (taskInfo: string) => setValue('info', taskInfo);
+  const onInputTaskCheckImportant = (taskCheckImportant: boolean) => setValue('isImportant', taskCheckImportant);
 
   return (
     <form>
-      <TextField
-        label={'Task name'}
-        onChange={onInputTaskName}
-        placeholder={'test'}
-        inputType="text"
-        value={taskName}
+      <Controller
+        control={control}
+        name="name"
+        render={({ field, fieldState: { error } }) => (
+          <TextField
+            label={'Task name'}
+            onChange={onInputTaskName}
+            placeholder={'test'}
+            inputType="text"
+            value={field.value}
+            errorText={error?.message}
+          />
+        )}
       />
-      <TextField
-        label={'What to do(description)'}
-        onChange={onInputTaskDescription}
-        placeholder={'test description'}
-        inputType={'text'}
-        value={taskDescription}
+      <Controller
+        control={control}
+        name="info"
+        render={({ field, fieldState: { error } }) => (
+          <TextField
+            label={'What to do(description)'}
+            onChange={onInputTaskDescription}
+            placeholder={'test description'}
+            inputType="text"
+            value={field.value}
+            errorText={error?.message}
+          />
+        )}
       />
-      <Checkbox label={'Important'} onChange={onInputTaskCheckImportant} checked={taskCheckImportant} />
+      <Controller
+        control={control}
+        name="isImportant"
+        render={({ field }) => (
+          <Checkbox label={'Important'} onChange={onInputTaskCheckImportant} checked={field.value} />
+        )}
+      />
       <button type="submit" className="btn btn-secondary d-block m1-auto w-100" onClick={onSubmit}>
         Add task
       </button>
