@@ -3,11 +3,12 @@ import { observer } from 'mobx-react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { AddTaskInstance } from '../store';
+import { AddTaskInstance } from '../../store';
 import { DEFAULT_ADD_TASK_FORM, ADD_TASK_INPUT_VALIDATION_SCHEMA } from './AddTaskForm.constants';
 import { TextField, Checkbox } from 'components/index';
 import { ROOT } from 'constants/index';
 import { AddTaskEntity } from 'domains/Task.entity';
+import './AddPageForm.css';
 
 function AddTaskFormProto() {
   const redirectRoot = useNavigate();
@@ -49,6 +50,7 @@ function AddTaskFormProto() {
             placeholder={'test'}
             inputType="text"
             value={field.value}
+            containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
             errorText={error?.message}
           />
         )}
@@ -63,6 +65,7 @@ function AddTaskFormProto() {
             placeholder={'test description'}
             inputType="text"
             value={field.value}
+            containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
             errorText={error?.message}
           />
         )}

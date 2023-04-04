@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
 import { AddTaskInstance } from './store';
-import { AddTaskForm } from './components/AddTaskForm';
+import { AddTaskForm } from './components/AddTaskForm/AddTaskForm';
 
 function AddTaskProto() {
   useEffect(() => {
