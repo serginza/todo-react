@@ -1,1 +1,1 @@
-export type EditTasksProps = { taskId?: string };
+export type EditTasksId = { taskId?: string };

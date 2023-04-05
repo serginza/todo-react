@@ -13,7 +13,6 @@ class EditTaskStore {
       editTaskProps: computed,
       isEditTaskLoading: computed,
 
-      changeTask: action,
       loadEditTask: action,
       getEditProps: action,
     });
@@ -40,24 +39,14 @@ class EditTaskStore {
     return this._isEditTaskLoading;
   }
 
-  changeTask(key: string, value: unknown) {
-    this.editTaskProps = {
-      ...this.editTaskProps,
-      [key]: value,
-    };
-  }
-
-  loadEditTask = async () => {
+  loadEditTask = async (editTaskValues?: EditTaskEntity) => {
     try {
       this._isEditTaskLoading = true;
 
       await delay(1000);
-      console.log(`
-      TaskName: ${this.editTaskProps.name}
-      TaskDescription: ${this.editTaskProps.info},
-      TaskCheckImportant: ${this.editTaskProps.isImportant},
-      TaskCheckDone ${this.editTaskProps.isDone}
-    `);
+      if (editTaskValues) {
+        console.log(editTaskValues);
+      }
     } catch {
       console.log('Error of changing task!');
     } finally {
@@ -71,7 +60,6 @@ class EditTaskStore {
       this._editTaskProps = task;
     }
     this.loadEditTask();
-    // console.log(task);
   }
 }
 

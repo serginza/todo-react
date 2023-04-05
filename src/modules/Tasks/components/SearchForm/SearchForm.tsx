@@ -16,28 +16,12 @@ function SearchFormProto() {
     // resolver: yupResolver(SEARCH_INPUT_VALIDATION_SCHEMA),
   });
 
-  // const [filterType, setFilterType] = useState<FiltersType>(FILTER_TYPES.ALL);
-  // const [searchValue, setSearchValue] = useState<string>('');
-
-  // const onSearchInputChange = (value: string) => {
-  //   setSearchValue(value);
-  // };
-
-  // const onFilterChange = (type: FiltersType) => {
-  //   setFilterType(type);
-  // };
-
-  // const onResetValue = () => setSearchValue('');
-
   const onSubmit = async (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     handleSubmit((form) => {
       loadTasks(form);
-      reset();
+      reset(); //заменить на сброс только поля
     })();
-    // setSearchValue('');
-    // setFilterType(FILTER_TYPES.ALL);
-    // console.log(`search: ${searchValue}, in section ${filterType}`);
   };
 
   const onTasksTypeChange = (tasksType: FiltersType) => setValue('filterType', tasksType);

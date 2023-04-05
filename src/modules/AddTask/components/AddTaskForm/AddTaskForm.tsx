@@ -36,7 +36,7 @@ function AddTaskFormProto() {
 
   const onInputTaskName = (taskName: string) => setValue('name', taskName);
   const onInputTaskDescription = (taskInfo: string) => setValue('info', taskInfo);
-  const onInputTaskCheckImportant = (taskCheckImportant: boolean) => setValue('isImportant', taskCheckImportant);
+  const onTaskCheckImportant = (taskCheckImportant: boolean) => setValue('isImportant', taskCheckImportant);
 
   return (
     <form>
@@ -73,9 +73,7 @@ function AddTaskFormProto() {
       <Controller
         control={control}
         name="isImportant"
-        render={({ field }) => (
-          <Checkbox label={'Important'} onChange={onInputTaskCheckImportant} checked={field.value} />
-        )}
+        render={({ field }) => <Checkbox label={'Important'} onChange={onTaskCheckImportant} checked={field.value} />}
       />
       <button type="submit" className="btn btn-secondary d-block m1-auto w-100" onClick={onSubmit}>
         Add task

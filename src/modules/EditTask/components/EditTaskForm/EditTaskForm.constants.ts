@@ -9,6 +9,6 @@ export const DEFAULT_EDIT_TASK_FORM: EditTaskEntity = {
 };
 
 export const EDIT_TASK_INPUT_VALIDATION_SCHEMA = Yup.object().shape({
-  name: Yup.string().required('Search Input is required!').min(3, 'Task Name must be at least 3 characters'),
+  name: Yup.string().required('Search Input is required!').min(3, 'Task name must be at least 3 characters'),
   info: Yup.string().required('Search Input is required!'),
 });
