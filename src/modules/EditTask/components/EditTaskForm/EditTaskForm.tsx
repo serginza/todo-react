@@ -20,12 +20,6 @@ function EditTaskFormProto() {
     resolver: yupResolver(EDIT_TASK_INPUT_VALIDATION_SCHEMA),
   });
 
-  useEffect((): void => {
-    if (editTaskProps) {
-      reset(editTaskProps);
-    }
-  }, [editTaskProps]);
-
   const onSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     try {
@@ -45,8 +39,14 @@ function EditTaskFormProto() {
   const onTaskCheckImportant = (taskCheckImportant: boolean) => setValue('isImportant', taskCheckImportant);
   const onTaskCheckCompleted = (taskCheckCompleted: boolean) => setValue('isDone', taskCheckCompleted);
 
+  useEffect((): void => {
+    if (editTaskProps) {
+      reset(editTaskProps);
+    }
+  }, [editTaskProps]);
+
   return (
-    <form className="edit-task-form">
+    <form className="edit-task-form d-flex flex-column justify-content-center">
       <Loader isLoading={isEditTaskLoading} variant="circle">
         <Controller
           control={control}

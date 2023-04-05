@@ -1,3 +1,7 @@
 .edit-task-form {
   min-height: 200px;
 }
+
+.edit-task-form :first-child {
+  align-self: center;
+}

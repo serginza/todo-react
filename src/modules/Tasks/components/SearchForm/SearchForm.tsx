@@ -11,16 +11,16 @@ import './SearchForm.css';
 
 function SearchFormProto() {
   const { isTasksLoading, loadTasks } = TasksStoreInstance;
+
   const { control, handleSubmit, setValue, reset } = useForm<SearchFormEntity>({
     defaultValues: DEFAULT_SEARCH_FORM,
     // resolver: yupResolver(SEARCH_INPUT_VALIDATION_SCHEMA),
   });
 
-  const onSubmit = async (evt: MouseEvent<HTMLButtonElement>) => {
+  const onSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
     handleSubmit((form) => {
       loadTasks(form);
-      reset(); //заменить на сброс только поля
     })();
   };
 
