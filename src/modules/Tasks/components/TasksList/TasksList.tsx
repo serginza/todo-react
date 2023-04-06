@@ -6,7 +6,7 @@ import { Loader } from 'components/Loader';
 import './TasksList.css';
 
 function TasksListProto() {
-  const { tasks, isTasksLoading, changeTaskImportant, changeTaskCompleted, deleteTask } = TasksStoreInstance;
+  const { isTasksLoading, tasks, changeTaskImportant, deleteTask, changeTaskCompleted } = TasksStoreInstance;
 
   return (
     <div className="tasks-wrapper d-flex align-items-center justify-content-center">

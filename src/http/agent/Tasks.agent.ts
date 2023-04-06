@@ -13,13 +13,13 @@ class TasksAgent extends BasicAgent {
   }
 
   async updateTask(taskId: string, newTaskParams: UpdateTaskRequest): Promise<UpdateTaskResponse> {
-    const { data } = await this._http.patch<UpdateTaskResponse>(`/tasks${taskId}`, { newTaskParams });
+    const { data } = await this._http.patch<UpdateTaskResponse>(`/tasks/${taskId}`, newTaskParams);
 
     return data;
   }
 
   async deleteTask(taskId: string): Promise<void> {
-    await this._http.delete(`/tasks${taskId}`);
+    await this._http.delete(`/tasks/${taskId}`);
   }
 }
 

@@ -64,19 +64,19 @@ class TasksStore {
     this._isTasksLoading = true;
 
     try {
-      const { tasks, tasksStats } = await this.getTasks(this._searchForm);
-
       if (searchValues) {
         this._searchForm = searchValues;
         console.log(searchValues);
       }
+
+      const { tasks, tasksStats } = await this.getTasks(this._searchForm);
 
       this._tasks = tasks;
       this._tasksStats = tasksStats;
     } catch {
       this._tasks = null;
       this._tasksStats = null;
-      console.log('Error of exporn search info!');
+      console.log('Error of export search info!');
     } finally {
       this._isTasksLoading = false;
     }
@@ -93,14 +93,14 @@ class TasksStore {
 
       this._tasks = tasks;
       this._tasksStats = tasksStats;
+      console.log(`Task id = ${taskId}, important = ${!currentStatus}`);
     } catch {
       this._tasks = null;
       this._tasksStats = null;
+      console.log('Error of change "Important check"!');
     } finally {
       this._isTasksLoading = false;
     }
-    console.log(`Task id = ${taskId}, important = ${!currentStatus}`);
-    this.loadTasks();
   };
 
   changeTaskCompleted = async (taskId: TaskEntity['id'], currentStatus: boolean) => {
@@ -122,7 +122,6 @@ class TasksStore {
       this._isTasksLoading = false;
     }
     console.log(`Task id = ${taskId}, comlpete = ${!currentStatus}`);
-    this.loadTasks();
   };
 
   deleteTask = async (taskId: TaskEntity['id']) => {
@@ -141,7 +140,6 @@ class TasksStore {
       this._isTasksLoading = false;
     }
     console.log(`Task id = ${taskId} deleted!`);
-    this.loadTasks();
   };
 }
 
