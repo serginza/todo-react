@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AddTaskInstance } from '../../store';
 import { DEFAULT_ADD_TASK_FORM, ADD_TASK_INPUT_VALIDATION_SCHEMA } from './AddTaskForm.constants';
-import { TextField, Checkbox } from 'components/index';
+import { TextField, Checkbox, Loader } from 'components/index';
 import { ROOT } from 'constants/index';
 import { AddTaskEntity } from 'domains/Task.entity';
 import './AddPageForm.css';
@@ -13,7 +13,7 @@ import './AddPageForm.css';
 function AddTaskFormProto() {
   const redirectRoot = useNavigate();
 
-  const { loadAddTask } = AddTaskInstance;
+  const { loadAddTask, isAddTaskLoading } = AddTaskInstance;
 
   const { control, handleSubmit, setValue, reset } = useForm<AddTaskEntity>({
     defaultValues: DEFAULT_ADD_TASK_FORM,
@@ -39,45 +39,47 @@ function AddTaskFormProto() {
   const onTaskCheckImportant = (taskCheckImportant: boolean) => setValue('isImportant', taskCheckImportant);
 
   return (
-    <form>
-      <Controller
-        control={control}
-        name="name"
-        render={({ field, fieldState: { error } }) => (
-          <TextField
-            label={'Task name'}
-            onChange={onInputTaskName}
-            placeholder={'test'}
-            inputType="text"
-            value={field.value}
-            containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
-            errorText={error?.message}
-          />
-        )}
-      />
-      <Controller
-        control={control}
-        name="info"
-        render={({ field, fieldState: { error } }) => (
-          <TextField
-            label={'What to do(description)'}
-            onChange={onInputTaskDescription}
-            placeholder={'test description'}
-            inputType="text"
-            value={field.value}
-            containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
-            errorText={error?.message}
-          />
-        )}
-      />
-      <Controller
-        control={control}
-        name="isImportant"
-        render={({ field }) => <Checkbox label={'Important'} onChange={onTaskCheckImportant} checked={field.value} />}
-      />
-      <button type="submit" className="btn btn-secondary d-block m1-auto w-100" onClick={onSubmit}>
-        Add task
-      </button>
+    <form className="add-task-form d-flex flex-column justify-content-center">
+      <Loader isLoading={isAddTaskLoading} variant="circle">
+        <Controller
+          control={control}
+          name="name"
+          render={({ field, fieldState: { error } }) => (
+            <TextField
+              label={'Task name'}
+              onChange={onInputTaskName}
+              placeholder={'test'}
+              inputType="text"
+              value={field.value}
+              containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
+              errorText={error?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="info"
+          render={({ field, fieldState: { error } }) => (
+            <TextField
+              label={'What to do(description)'}
+              onChange={onInputTaskDescription}
+              placeholder={'test description'}
+              inputType="text"
+              value={field.value}
+              containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
+              errorText={error?.message}
+            />
+          )}
+        />
+        <Controller
+          control={control}
+          name="isImportant"
+          render={({ field }) => <Checkbox label={'Important'} onChange={onTaskCheckImportant} checked={field.value} />}
+        />
+        <button type="submit" className="btn btn-secondary d-block m1-auto w-100" onClick={onSubmit}>
+          Add task
+        </button>
+      </Loader>
     </form>
   );
 }
