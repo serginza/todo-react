@@ -46,7 +46,7 @@ export const mapToInternalTask = (task: GetTaskResponse): EditTaskEntity => {
     name: task.name || 'Unknown value',
     info: task.info || 'Unknown value',
     isImportant: task.isImportant || false,
-    isDone: task.isCompleted || false,
+    isCompleted: task.isCompleted || false,
   };
 };
 

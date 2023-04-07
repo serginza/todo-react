@@ -17,7 +17,6 @@ class EditTaskStore {
 
       loadEditTask: action,
       getEditProps: action,
-      // getEditTasks: action,
     });
   }
 
@@ -25,7 +24,7 @@ class EditTaskStore {
     name: '',
     info: '',
     isImportant: false,
-    isDone: false,
+    isCompleted: false,
   };
 
   get editTaskProps(): EditTaskEntity | null {
@@ -90,14 +89,6 @@ class EditTaskStore {
       this.isEditTaskLoading = false;
     }
   };
-
-  // getEditProps(taskId?: string) {
-  //   const task = TasksMock.find((task) => task.id === taskId);
-  //   if (task) {
-  //     this._editTaskProps = task;
-  //   }
-  //   this.loadEditTask();
-  // }
 }
 
 export const EditTaskInstance = new EditTaskStore();

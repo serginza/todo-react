@@ -37,7 +37,7 @@ function EditTaskFormProto() {
   const onInputTaskName = (taskName: string) => setValue('name', taskName);
   const onInputTaskDescription = (taskInfo: string) => setValue('info', taskInfo);
   const onTaskCheckImportant = (taskCheckImportant: boolean) => setValue('isImportant', taskCheckImportant);
-  const onTaskCheckCompleted = (taskCheckCompleted: boolean) => setValue('isDone', taskCheckCompleted);
+  const onTaskCheckCompleted = (taskCheckCompleted: boolean) => setValue('isCompleted', taskCheckCompleted);
 
   useEffect((): void => {
     if (editTaskProps) {
@@ -85,14 +85,14 @@ function EditTaskFormProto() {
                 <Checkbox
                   label={'Important'}
                   onChange={onTaskCheckImportant}
-                  checked={field.value}
-                  disabled={watch('isDone')}
+                  checked={watch('isCompleted') ? false : field.value}
+                  disabled={watch('isCompleted')}
                 />
               )}
             />
             <Controller
               control={control}
-              name="isDone"
+              name="isCompleted"
               render={({ field }) => (
                 <Checkbox label={'Completed'} onChange={onTaskCheckCompleted} checked={field.value} />
               )}

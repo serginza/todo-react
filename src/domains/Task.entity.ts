@@ -12,7 +12,7 @@ export interface EditTaskEntity {
   name: string;
   info: string;
   isImportant: boolean;
-  isDone: boolean;
+  isCompleted: boolean;
 }
 
 export interface AddTaskEntity {

@@ -5,7 +5,7 @@ export const DEFAULT_EDIT_TASK_FORM: EditTaskEntity = {
   name: '',
   info: '',
   isImportant: false,
-  isDone: false,
+  isCompleted: false,
 };
 
 export const EDIT_TASK_INPUT_VALIDATION_SCHEMA = Yup.object().shape({

@@ -32,8 +32,12 @@ class AddTaskStore {
     return this._isAddTaskLoading;
   }
 
+  set isAddTaskLoading(value: boolean) {
+    this._isAddTaskLoading = value;
+  }
+
   loadAddTask = async (addTaskValues?: AddTaskEntity) => {
-    this._isAddTaskLoading = true;
+    this.isAddTaskLoading = true;
     try {
       if (addTaskValues) {
         await TaskAgentInstance.createTask(addTaskValues);
@@ -44,7 +48,7 @@ class AddTaskStore {
     } catch {
       console.log('Error of receiving data!');
     } finally {
-      this._isAddTaskLoading = false;
+      this.isAddTaskLoading = false;
     }
   };
 }
