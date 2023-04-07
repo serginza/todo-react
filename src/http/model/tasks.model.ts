@@ -7,3 +7,6 @@ export type GetTaskResponse = paths['/tasks/{taskId}']['get']['responses']['200'
 
 export type UpdateTaskRequest = paths['/tasks/{taskId}']['patch']['requestBody']['content']['application/json'];
 export type UpdateTaskResponse = paths['/tasks/{taskId}']['patch']['responses']['200']['content']['application/json'];
+
+export type PostTaskRequest = paths['/tasks']['post']['requestBody']['content']['application/json'];
+export type PostTaskResponse = paths['/tasks']['post']['responses']['200']['content']['application/json'];

@@ -5,6 +5,9 @@ import { PageContainer } from 'components/index';
 
 export function EditTaskPage() {
   const { taskId } = useParams();
+  if (taskId === undefined) {
+    return null;
+  }
 
   return (
     <PageContainer>

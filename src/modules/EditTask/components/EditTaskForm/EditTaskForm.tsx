@@ -48,54 +48,62 @@ function EditTaskFormProto() {
   return (
     <form className="edit-task-form d-flex flex-column justify-content-center">
       <Loader isLoading={isEditTaskLoading} variant="circle">
-        <Controller
-          control={control}
-          name="name"
-          render={({ field, fieldState: { error } }) => (
-            <TextField
-              label={'Task name'}
-              onChange={onInputTaskName}
-              inputType="text"
-              value={field.value}
-              containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
-              errorText={error?.message}
+        {editTaskProps ? (
+          <>
+            <Controller
+              control={control}
+              name="name"
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  label={'Task name'}
+                  onChange={onInputTaskName}
+                  inputType="text"
+                  value={field.value}
+                  containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
+                  errorText={error?.message}
+                />
+              )}
             />
-          )}
-        />
-        <Controller
-          control={control}
-          name="info"
-          render={({ field, fieldState: { error } }) => (
-            <TextField
-              label={'What to do(description)'}
-              onChange={onInputTaskDescription}
-              inputType={'text'}
-              value={field.value}
-              containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
-              errorText={error?.message}
+            <Controller
+              control={control}
+              name="info"
+              render={({ field, fieldState: { error } }) => (
+                <TextField
+                  label={'What to do(description)'}
+                  onChange={onInputTaskDescription}
+                  inputType={'text'}
+                  value={field.value}
+                  containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
+                  errorText={error?.message}
+                />
+              )}
             />
-          )}
-        />
-        <Controller
-          control={control}
-          name="isImportant"
-          render={({ field }) => (
-            <Checkbox
-              label={'Important'}
-              onChange={onTaskCheckImportant}
-              checked={field.value}
-              disabled={watch('isDone')}
+            <Controller
+              control={control}
+              name="isImportant"
+              render={({ field }) => (
+                <Checkbox
+                  label={'Important'}
+                  onChange={onTaskCheckImportant}
+                  checked={field.value}
+                  disabled={watch('isDone')}
+                />
+              )}
             />
-          )}
-        />
-        <Controller
-          control={control}
-          name="isDone"
-          render={({ field }) => <Checkbox label={'Completed'} onChange={onTaskCheckCompleted} checked={field.value} />}
-        />
-        <button type="submit" className="btn btn-secondary d-block m1-auto w-100" onClick={onSubmit}>
-          Edit task
-        </button>
+            <Controller
+              control={control}
+              name="isDone"
+              render={({ field }) => (
+                <Checkbox label={'Completed'} onChange={onTaskCheckCompleted} checked={field.value} />
+              )}
+            />
+            <button type="submit" className="btn btn-secondary d-block m1-auto w-100" onClick={onSubmit}>
+              Edit task
+            </button>
+          </>
+        ) : (
+          <p>Not found</p>
+        )}
       </Loader>
     </form>
   );

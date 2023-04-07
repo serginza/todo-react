@@ -1,36 +1,39 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { PrivateFieldEditTaskProps } from './EditTask.store.types';
 import { EditTaskEntity } from 'domains/index';
-import { TasksMock } from '__mocks__/Tasks.mock';
-import { delay } from 'helpers/delay';
+import { mapToInternalTask } from 'helpers/mappers';
+import { TaskAgentInstance } from 'http/agent';
 
 class EditTaskStore {
   constructor() {
     makeObservable<this, PrivateFieldEditTaskProps>(this, {
       _editTaskProps: observable,
       _isEditTaskLoading: observable,
+      _taskId: observable,
 
       editTaskProps: computed,
       isEditTaskLoading: computed,
+      taskId: computed,
 
       loadEditTask: action,
       getEditProps: action,
+      // getEditTasks: action,
     });
   }
 
-  private _editTaskProps: EditTaskEntity = {
+  private _editTaskProps: EditTaskEntity | null = {
     name: '',
     info: '',
     isImportant: false,
     isDone: false,
   };
 
-  get editTaskProps(): EditTaskEntity {
+  get editTaskProps(): EditTaskEntity | null {
     return this._editTaskProps;
   }
 
-  set editTaskProps(task: EditTaskEntity) {
-    this._editTaskProps = task;
+  set editTaskProps(value: EditTaskEntity | null) {
+    this._editTaskProps = value;
   }
 
   private _isEditTaskLoading = false;
@@ -39,14 +42,42 @@ class EditTaskStore {
     return this._isEditTaskLoading;
   }
 
-  loadEditTask = async (editTaskValues?: EditTaskEntity) => {
-    try {
-      this._isEditTaskLoading = true;
+  set isEditTaskLoading(value: boolean) {
+    this._isEditTaskLoading = value;
+  }
 
-      await delay(1000);
-      if (editTaskValues) {
-        console.log(editTaskValues);
+  private _taskId: string | null = '0';
+
+  get taskId(): string | null {
+    return this._taskId;
+  }
+
+  set taskId(id: string | null) {
+    this._taskId = id;
+  }
+
+  getEditProps = async (editTaskId: string | null) => {
+    const taskEditResult = await TaskAgentInstance.getTask(editTaskId);
+    if (taskEditResult) {
+      this._editTaskProps = mapToInternalTask(taskEditResult);
+      console.log(this._editTaskProps);
+    } else {
+      return null;
+    }
+  };
+
+  loadEditTask = async (editTask: EditTaskEntity) => {
+    this._isEditTaskLoading = true;
+    try {
+      if (editTask) {
+        this._editTaskProps = editTask;
+        console.log(editTask);
       }
+      // const { task } = await this.getEditTasks();
+      await TaskAgentInstance.updateTask(this.taskId, editTask);
+
+      this._editTaskProps = editTask;
+      console.log(editTask);
     } catch {
       console.log('Error of changing task!');
     } finally {
@@ -54,13 +85,13 @@ class EditTaskStore {
     }
   };
 
-  getEditProps(taskId?: string) {
-    const task = TasksMock.find((task) => task.id === taskId);
-    if (task) {
-      this._editTaskProps = task;
-    }
-    this.loadEditTask();
-  }
+  // getEditProps(taskId?: string) {
+  //   const task = TasksMock.find((task) => task.id === taskId);
+  //   if (task) {
+  //     this._editTaskProps = task;
+  //   }
+  //   this.loadEditTask();
+  // }
 }
 
 export const EditTaskInstance = new EditTaskStore();

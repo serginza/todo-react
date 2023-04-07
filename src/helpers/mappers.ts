@@ -1,6 +1,6 @@
 import { FILTER_TYPES } from 'constants/index';
-import { TaskEntity, SearchFormEntity, TasksStatsEntity } from 'domains/index';
-import { GetAllTasksQuery, GetAllTasksResponse } from 'http/index';
+import { TaskEntity, SearchFormEntity, TasksStatsEntity, EditTaskEntity } from 'domains/index';
+import { GetAllTasksQuery, GetAllTasksResponse, GetTaskResponse } from 'http/index';
 
 export const mapToExternalParams = (params?: SearchFormEntity): GetAllTasksQuery | undefined => {
   if (!params) {
@@ -39,6 +39,15 @@ export const mapToInternalTasks = (tasks: GetAllTasksResponse): TaskEntity[] => 
   });
 
   return internalTasks;
+};
+
+export const mapToInternalTask = (task: GetTaskResponse): EditTaskEntity => {
+  return {
+    name: task.name || 'Unknown value',
+    info: task.info || 'Unknown value',
+    isImportant: task.isImportant || false,
+    isDone: task.isCompleted || false,
+  };
 };
 
 export const getInternalInfo = (tasks: GetAllTasksResponse): TasksStatsEntity => {

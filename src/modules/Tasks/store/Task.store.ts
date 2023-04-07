@@ -29,11 +29,19 @@ class TasksStore {
     return this._tasks;
   }
 
+  // set tasks(value: TaskEntity[] | null) {
+  //   this._tasks = value;
+  // }
+
   private _tasksStats: TasksStatsEntity | null = {
     total: 0,
     important: 0,
     done: 0,
   };
+
+  // set tasksStats(value: TasksStatsEntity | null) {
+  //   this._tasksStats = value;
+  // }
 
   get tasksStats(): TasksStatsEntity | null {
     return this._tasksStats;
@@ -44,6 +52,10 @@ class TasksStore {
   get isTasksLoading(): boolean {
     return this._isTasksLoading;
   }
+
+  // set isEditTaskLoading(value: boolean) {
+  //   this._isTasksLoading = value;
+  // }
 
   private _searchForm?: SearchFormEntity = {
     searchValue: '',
@@ -76,7 +88,7 @@ class TasksStore {
     } catch {
       this._tasks = null;
       this._tasksStats = null;
-      console.log('Error of export search info!');
+      console.log('Error of update tasks list!');
     } finally {
       this._isTasksLoading = false;
     }
@@ -115,13 +127,14 @@ class TasksStore {
 
       this._tasks = tasks;
       this._tasksStats = tasksStats;
+      console.log(`Task id = ${taskId}, comlpete = ${!currentStatus}`);
     } catch {
       this._tasks = null;
       this._tasksStats = null;
+      console.log('Error of change "Complete check"!');
     } finally {
       this._isTasksLoading = false;
     }
-    console.log(`Task id = ${taskId}, comlpete = ${!currentStatus}`);
   };
 
   deleteTask = async (taskId: TaskEntity['id']) => {
@@ -133,13 +146,14 @@ class TasksStore {
 
       this._tasks = tasks;
       this._tasksStats = tasksStats;
+      console.log(`Task id = ${taskId} deleted!`);
     } catch {
       this._tasks = null;
       this._tasksStats = null;
+      console.log('Error of deleting data!');
     } finally {
       this._isTasksLoading = false;
     }
-    console.log(`Task id = ${taskId} deleted!`);
   };
 }
 

@@ -1,3 +1,4 @@
+import { GetTaskResponse } from './../model/tasks.model';
 import { BasicAgent } from './Basic.agent';
 import { GetAllTasksResponse, GetAllTasksQuery, UpdateTaskResponse, UpdateTaskRequest } from 'http/model';
 
@@ -12,7 +13,7 @@ class TasksAgent extends BasicAgent {
     return data;
   }
 
-  async updateTask(taskId: string, newTaskParams: UpdateTaskRequest): Promise<UpdateTaskResponse> {
+  async updateTask(taskId: string | null, newTaskParams: UpdateTaskRequest): Promise<UpdateTaskResponse> {
     const { data } = await this._http.patch<UpdateTaskResponse>(`/tasks/${taskId}`, newTaskParams);
 
     return data;
@@ -20,6 +21,18 @@ class TasksAgent extends BasicAgent {
 
   async deleteTask(taskId: string): Promise<void> {
     await this._http.delete(`/tasks/${taskId}`);
+  }
+
+  async getTask(taskId: string | null): Promise<GetTaskResponse> {
+    const { data } = await this._http.get<GetTaskResponse>(`/tasks/${taskId}`);
+
+    return data;
+  }
+
+  async createTask(TaskParams: UpdateTaskRequest): Promise<UpdateTaskResponse> {
+    const { data } = await this._http.post<UpdateTaskResponse>('/tasks', TaskParams);
+
+    return data;
   }
 }
 

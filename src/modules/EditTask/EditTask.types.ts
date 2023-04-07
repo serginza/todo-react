@@ -1,1 +1,1 @@
-export type EditTasksId = { taskId?: string };
+export type EditTasksId = { taskId: string | null };
