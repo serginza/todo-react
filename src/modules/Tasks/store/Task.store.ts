@@ -29,9 +29,9 @@ class TasksStore {
     return this._tasks;
   }
 
-  // set tasks(value: TaskEntity[] | null) {
-  //   this._tasks = value;
-  // }
+  set tasks(value: TaskEntity[] | null) {
+    this._tasks = value;
+  }
 
   private _tasksStats: TasksStatsEntity | null = {
     total: 0,
@@ -39,12 +39,12 @@ class TasksStore {
     done: 0,
   };
 
-  // set tasksStats(value: TasksStatsEntity | null) {
-  //   this._tasksStats = value;
-  // }
-
   get tasksStats(): TasksStatsEntity | null {
     return this._tasksStats;
+  }
+
+  set tasksStats(value: TasksStatsEntity | null) {
+    this._tasksStats = value;
   }
 
   private _isTasksLoading = false;
@@ -53,9 +53,9 @@ class TasksStore {
     return this._isTasksLoading;
   }
 
-  // set isEditTaskLoading(value: boolean) {
-  //   this._isTasksLoading = value;
-  // }
+  set isTasksLoading(value: boolean) {
+    this._isTasksLoading = value;
+  }
 
   private _searchForm?: SearchFormEntity = {
     searchValue: '',
@@ -73,7 +73,7 @@ class TasksStore {
   };
 
   loadTasks = async (searchValues?: SearchFormEntity) => {
-    this._isTasksLoading = true;
+    this.isTasksLoading = true;
 
     try {
       if (searchValues) {
@@ -83,19 +83,19 @@ class TasksStore {
 
       const { tasks, tasksStats } = await this.getTasks(this._searchForm);
 
-      this._tasks = tasks;
-      this._tasksStats = tasksStats;
+      this.tasks = tasks;
+      this.tasksStats = tasksStats;
     } catch {
-      this._tasks = null;
-      this._tasksStats = null;
+      this.tasks = null;
+      this.tasksStats = null;
       console.log('Error of update tasks list!');
     } finally {
-      this._isTasksLoading = false;
+      this.isTasksLoading = false;
     }
   };
 
   changeTaskImportant = async (taskId: TaskEntity['id'], currentStatus: boolean) => {
-    this._isTasksLoading = true;
+    this.isTasksLoading = true;
     try {
       await TaskAgentInstance.updateTask(taskId, {
         isImportant: !currentStatus,
@@ -103,20 +103,20 @@ class TasksStore {
 
       const { tasks, tasksStats } = await this.getTasks(this._searchForm);
 
-      this._tasks = tasks;
-      this._tasksStats = tasksStats;
+      this.tasks = tasks;
+      this.tasksStats = tasksStats;
       console.log(`Task id = ${taskId}, important = ${!currentStatus}`);
     } catch {
-      this._tasks = null;
-      this._tasksStats = null;
+      this.tasks = null;
+      this.tasksStats = null;
       console.log('Error of change "Important check"!');
     } finally {
-      this._isTasksLoading = false;
+      this.isTasksLoading = false;
     }
   };
 
   changeTaskCompleted = async (taskId: TaskEntity['id'], currentStatus: boolean) => {
-    this._isTasksLoading = true;
+    this.isTasksLoading = true;
     try {
       await TaskAgentInstance.updateTask(taskId, {
         isCompleted: !currentStatus,
@@ -125,34 +125,34 @@ class TasksStore {
 
       const { tasks, tasksStats } = await this.getTasks(this._searchForm);
 
-      this._tasks = tasks;
-      this._tasksStats = tasksStats;
+      this.tasks = tasks;
+      this.tasksStats = tasksStats;
       console.log(`Task id = ${taskId}, comlpete = ${!currentStatus}`);
     } catch {
-      this._tasks = null;
-      this._tasksStats = null;
+      this.tasks = null;
+      this.tasksStats = null;
       console.log('Error of change "Complete check"!');
     } finally {
-      this._isTasksLoading = false;
+      this.isTasksLoading = false;
     }
   };
 
   deleteTask = async (taskId: TaskEntity['id']) => {
-    this._isTasksLoading = true;
+    this.isTasksLoading = true;
     try {
       await TaskAgentInstance.deleteTask(taskId);
 
       const { tasks, tasksStats } = await this.getTasks(this._searchForm);
 
-      this._tasks = tasks;
-      this._tasksStats = tasksStats;
+      this.tasks = tasks;
+      this.tasksStats = tasksStats;
       console.log(`Task id = ${taskId} deleted!`);
     } catch {
-      this._tasks = null;
-      this._tasksStats = null;
+      this.tasks = null;
+      this.tasksStats = null;
       console.log('Error of deleting data!');
     } finally {
-      this._isTasksLoading = false;
+      this.isTasksLoading = false;
     }
   };
 }

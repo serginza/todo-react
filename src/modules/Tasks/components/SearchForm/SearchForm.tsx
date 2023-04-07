@@ -12,7 +12,7 @@ import './SearchForm.css';
 function SearchFormProto() {
   const { isTasksLoading, loadTasks } = TasksStoreInstance;
 
-  const { control, handleSubmit, setValue, reset } = useForm<SearchFormEntity>({
+  const { control, handleSubmit, setValue } = useForm<SearchFormEntity>({
     defaultValues: DEFAULT_SEARCH_FORM,
     // resolver: yupResolver(SEARCH_INPUT_VALIDATION_SCHEMA),
   });

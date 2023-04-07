@@ -1,7 +1,7 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { PrivateFieldAddTaskProps } from './AddTask.store.types';
 import { AddTaskEntity } from 'domains/index';
-// import { delay } from 'helpers/delay';
+import { TaskAgentInstance } from 'http/agent';
 
 class AddTaskStore {
   constructor() {
@@ -15,13 +15,14 @@ class AddTaskStore {
     });
   }
 
-  private _addTaskProps: AddTaskEntity = {
+  private _addTaskProps: AddTaskEntity | null = {
     name: '',
     info: '',
     isImportant: false,
+    isCompleted: false,
   };
 
-  get addTaskProps(): AddTaskEntity {
+  get addTaskProps(): AddTaskEntity | null {
     return this._addTaskProps;
   }
 
@@ -32,15 +33,16 @@ class AddTaskStore {
   }
 
   loadAddTask = async (addTaskValues?: AddTaskEntity) => {
+    this._isAddTaskLoading = true;
     try {
-      this._isAddTaskLoading = true;
-
-      // await delay(1000);
       if (addTaskValues) {
+        await TaskAgentInstance.createTask(addTaskValues);
+
+        this._addTaskProps = addTaskValues;
         console.log(addTaskValues);
       }
     } catch {
-      console.log('Error of requiring data!');
+      console.log('Error of receiving data!');
     } finally {
       this._isAddTaskLoading = false;
     }

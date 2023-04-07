@@ -1,6 +1,13 @@
 import { GetTaskResponse } from './../model/tasks.model';
 import { BasicAgent } from './Basic.agent';
-import { GetAllTasksResponse, GetAllTasksQuery, UpdateTaskResponse, UpdateTaskRequest } from 'http/model';
+import {
+  GetAllTasksResponse,
+  GetAllTasksQuery,
+  UpdateTaskResponse,
+  UpdateTaskRequest,
+  PostTaskRequest,
+  PostTaskResponse,
+} from 'http/model';
 
 class TasksAgent extends BasicAgent {
   constructor() {
@@ -29,8 +36,8 @@ class TasksAgent extends BasicAgent {
     return data;
   }
 
-  async createTask(TaskParams: UpdateTaskRequest): Promise<UpdateTaskResponse> {
-    const { data } = await this._http.post<UpdateTaskResponse>('/tasks', TaskParams);
+  async createTask(TaskParams: PostTaskRequest): Promise<PostTaskResponse> {
+    const { data } = await this._http.post<PostTaskResponse>('/tasks', TaskParams);
 
     return data;
   }
