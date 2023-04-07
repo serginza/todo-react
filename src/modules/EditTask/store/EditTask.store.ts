@@ -57,12 +57,20 @@ class EditTaskStore {
   }
 
   getEditProps = async (editTaskId: string | null) => {
-    const taskEditResult = await TaskAgentInstance.getTask(editTaskId);
-    if (taskEditResult) {
-      this._editTaskProps = mapToInternalTask(taskEditResult);
-      console.log(this._editTaskProps);
-    } else {
-      return null;
+    this._isEditTaskLoading = true;
+    try {
+      const taskEditResult = await TaskAgentInstance.getTask(editTaskId);
+
+      if (taskEditResult) {
+        this._editTaskProps = mapToInternalTask(taskEditResult);
+        console.log(this._editTaskProps);
+      } else {
+        return null;
+      }
+    } catch {
+      console.log('Error of receiving data for edit task!');
+    } finally {
+      this._isEditTaskLoading = false;
     }
   };
 
