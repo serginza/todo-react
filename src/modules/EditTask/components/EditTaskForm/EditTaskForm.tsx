@@ -1,5 +1,5 @@
 import React, { MouseEvent, useEffect } from 'react';
-import { Controller, useForm } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -7,7 +7,7 @@ import { DEFAULT_EDIT_TASK_FORM, EDIT_TASK_INPUT_VALIDATION_SCHEMA } from './Edi
 import { EditTaskInstance } from 'modules/EditTask/store';
 import { TextField, Checkbox, Loader } from 'components/index';
 import { ROOT } from 'constants/path';
-import { EditTaskEntity } from 'domains/Task.entity';
+import { ActionTaskEntity } from 'domains/Task.entity';
 import './editTaskForm.css';
 
 function EditTaskFormProto() {
@@ -15,10 +15,12 @@ function EditTaskFormProto() {
 
   const { editTaskProps, isEditTaskLoading, loadEditTask } = EditTaskInstance;
 
-  const { control, handleSubmit, setValue, reset, watch } = useForm<EditTaskEntity>({
+  const { control, handleSubmit, setValue, reset } = useForm<ActionTaskEntity>({
     defaultValues: DEFAULT_EDIT_TASK_FORM,
     resolver: yupResolver(EDIT_TASK_INPUT_VALIDATION_SCHEMA),
   });
+
+  const watchIsCompleted = useWatch({ name: 'isCompleted', control });
 
   const onSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
     evt.preventDefault();
@@ -37,7 +39,12 @@ function EditTaskFormProto() {
   const onInputTaskName = (taskName: string) => setValue('name', taskName);
   const onInputTaskDescription = (taskInfo: string) => setValue('info', taskInfo);
   const onTaskCheckImportant = (taskCheckImportant: boolean) => setValue('isImportant', taskCheckImportant);
-  const onTaskCheckCompleted = (taskCheckCompleted: boolean) => setValue('isCompleted', taskCheckCompleted);
+  const onTaskCheckCompleted = (taskCheckCompleted: boolean) => {
+    if (taskCheckCompleted) {
+      setValue('isImportant', false);
+    }
+    setValue('isCompleted', taskCheckCompleted);
+  };
 
   useEffect((): void => {
     if (editTaskProps) {
@@ -85,8 +92,8 @@ function EditTaskFormProto() {
                 <Checkbox
                   label={'Important'}
                   onChange={onTaskCheckImportant}
-                  checked={watch('isCompleted') ? false : field.value}
-                  disabled={watch('isCompleted')}
+                  checked={field.value}
+                  disabled={watchIsCompleted}
                 />
               )}
             />

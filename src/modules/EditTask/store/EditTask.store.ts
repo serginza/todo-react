@@ -1,6 +1,6 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { PrivateFieldEditTaskProps } from './EditTask.store.types';
-import { EditTaskEntity } from 'domains/index';
+import { ActionTaskEntity } from 'domains/index';
 import { mapToInternalTask } from 'helpers/mappers';
 import { TaskAgentInstance } from 'http/agent';
 
@@ -20,18 +20,18 @@ class EditTaskStore {
     });
   }
 
-  private _editTaskProps: EditTaskEntity | null = {
+  private _editTaskProps: ActionTaskEntity | null = {
     name: '',
     info: '',
     isImportant: false,
     isCompleted: false,
   };
 
-  get editTaskProps(): EditTaskEntity | null {
+  get editTaskProps(): ActionTaskEntity | null {
     return this._editTaskProps;
   }
 
-  set editTaskProps(value: EditTaskEntity | null) {
+  set editTaskProps(value: ActionTaskEntity | null) {
     this._editTaskProps = value;
   }
 
@@ -72,13 +72,12 @@ class EditTaskStore {
     }
   };
 
-  loadEditTask = async (editTask: EditTaskEntity) => {
+  loadEditTask = async (editTask: ActionTaskEntity) => {
     this.isEditTaskLoading = true;
     try {
       if (editTask) {
         this.editTaskProps = editTask;
       }
-      // const { task } = await this.getEditTasks();
       await TaskAgentInstance.updateTask(this.taskId, editTask);
 
       this.editTaskProps = editTask;

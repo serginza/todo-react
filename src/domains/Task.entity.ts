@@ -8,14 +8,7 @@ export interface TaskEntity {
   isDone: boolean;
 }
 
-export interface EditTaskEntity {
-  name: string;
-  info: string;
-  isImportant: boolean;
-  isCompleted: boolean;
-}
-
-export interface AddTaskEntity {
+export interface ActionTaskEntity {
   name: string;
   info: string;
   isImportant: boolean;

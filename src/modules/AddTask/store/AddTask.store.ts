@@ -1,6 +1,6 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { PrivateFieldAddTaskProps } from './AddTask.store.types';
-import { AddTaskEntity } from 'domains/index';
+import { ActionTaskEntity } from 'domains/index';
 import { TaskAgentInstance } from 'http/agent';
 
 class AddTaskStore {
@@ -15,14 +15,14 @@ class AddTaskStore {
     });
   }
 
-  private _addTaskProps: AddTaskEntity | null = {
+  private _addTaskProps: ActionTaskEntity | null = {
     name: '',
     info: '',
     isImportant: false,
     isCompleted: false,
   };
 
-  get addTaskProps(): AddTaskEntity | null {
+  get addTaskProps(): ActionTaskEntity | null {
     return this._addTaskProps;
   }
 
@@ -36,7 +36,7 @@ class AddTaskStore {
     this._isAddTaskLoading = value;
   }
 
-  loadAddTask = async (addTaskValues?: AddTaskEntity) => {
+  loadAddTask = async (addTaskValues?: ActionTaskEntity) => {
     this.isAddTaskLoading = true;
     try {
       if (addTaskValues) {

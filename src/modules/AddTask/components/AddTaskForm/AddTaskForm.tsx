@@ -7,7 +7,7 @@ import { AddTaskInstance } from '../../store';
 import { DEFAULT_ADD_TASK_FORM, ADD_TASK_INPUT_VALIDATION_SCHEMA } from './AddTaskForm.constants';
 import { TextField, Checkbox, Loader } from 'components/index';
 import { ROOT } from 'constants/index';
-import { AddTaskEntity } from 'domains/Task.entity';
+import { ActionTaskEntity } from 'domains/Task.entity';
 import './AddPageForm.css';
 
 function AddTaskFormProto() {
@@ -15,7 +15,7 @@ function AddTaskFormProto() {
 
   const { loadAddTask, isAddTaskLoading } = AddTaskInstance;
 
-  const { control, handleSubmit, setValue, reset } = useForm<AddTaskEntity>({
+  const { control, handleSubmit, setValue, reset } = useForm<ActionTaskEntity>({
     defaultValues: DEFAULT_ADD_TASK_FORM,
     resolver: yupResolver(ADD_TASK_INPUT_VALIDATION_SCHEMA),
   });

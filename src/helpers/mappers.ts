@@ -1,5 +1,5 @@
 import { FILTER_TYPES } from 'constants/index';
-import { TaskEntity, SearchFormEntity, TasksStatsEntity, EditTaskEntity } from 'domains/index';
+import { TaskEntity, SearchFormEntity, TasksStatsEntity, ActionTaskEntity } from 'domains/index';
 import { GetAllTasksQuery, GetAllTasksResponse, GetTaskResponse } from 'http/index';
 
 export const mapToExternalParams = (params?: SearchFormEntity): GetAllTasksQuery | undefined => {
@@ -41,7 +41,7 @@ export const mapToInternalTasks = (tasks: GetAllTasksResponse): TaskEntity[] => 
   return internalTasks;
 };
 
-export const mapToInternalTask = (task: GetTaskResponse): EditTaskEntity => {
+export const mapToInternalTask = (task: GetTaskResponse): ActionTaskEntity => {
   return {
     name: task.name || 'Unknown value',
     info: task.info || 'Unknown value',

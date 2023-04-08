@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
-import { EditTaskEntity } from 'domains/index';
+import { ActionTaskEntity } from 'domains/index';
 
-export const DEFAULT_EDIT_TASK_FORM: EditTaskEntity = {
+export const DEFAULT_EDIT_TASK_FORM: ActionTaskEntity = {
   name: '',
   info: '',
   isImportant: false,
