@@ -10,24 +10,24 @@ function TasksStatsProto() {
     <div className="d-flex w-100 justify-content-between">
       {tasksStats ? (
         <>
-          <p>
+          <div>
             Total:
             <Loader isLoading={isTasksLoading} variant="dot">
               <span className="badge bg-secondary">{` ${tasksStats.total}`}</span>
             </Loader>
-          </p>
-          <p>
+          </div>
+          <div>
             Important:
             <Loader isLoading={isTasksLoading} variant="dot">
               <span className="badge bg-secondary">{` ${tasksStats.important}`}</span>
             </Loader>
-          </p>
-          <p>
+          </div>
+          <div>
             Done:
             <Loader isLoading={isTasksLoading} variant="dot">
               <span className="badge bg-secondary">{` ${tasksStats.done}`}</span>
             </Loader>
-          </p>
+          </div>
         </>
       ) : (
         <p className="d-flex justify-content-center w-100">Stats is not available</p>

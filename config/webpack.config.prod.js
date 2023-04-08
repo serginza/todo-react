@@ -17,6 +17,10 @@ const prodWebpackConfig = merge(BaseConfig, {
       chunkFilename: `assets/css/[name]-chunk.[fullhash:8].css`,
     }),
   ],
+  performance: {
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
   optimization: {
     minimize: true,
     minimizer: [
