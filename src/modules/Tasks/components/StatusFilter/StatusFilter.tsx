@@ -1,10 +1,10 @@
-import React, { MouseEvent } from 'react';
+import React, { memo, MouseEvent } from 'react';
 import { CLASSNAMES } from './StatusFilter.constants';
 import { StatusFilterProps } from './StatusFilter.types';
 import { FiltersType } from 'domains/index';
 import { FILTER_TYPES } from 'constants/index';
 
-export function StatusFilter({ onChange, tasksType, disabled }: StatusFilterProps) {
+function StatusFilterProto({ onChange, tasksType, disabled }: StatusFilterProps) {
   const onFilterChange = (evt: MouseEvent<HTMLDivElement> & { target: HTMLButtonElement }) => {
     if (!disabled) onChange(evt.target.textContent as FiltersType);
   };
@@ -26,3 +26,5 @@ export function StatusFilter({ onChange, tasksType, disabled }: StatusFilterProp
     </div>
   );
 }
+
+export const StatusFilter = memo(StatusFilterProto);

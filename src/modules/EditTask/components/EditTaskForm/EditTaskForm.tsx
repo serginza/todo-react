@@ -1,4 +1,4 @@
-import React, { MouseEvent, useEffect } from 'react';
+import React, { MouseEvent, useCallback, useEffect } from 'react';
 import { Controller, useForm, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
@@ -22,29 +22,53 @@ function EditTaskFormProto() {
 
   const watchIsCompleted = useWatch({ name: 'isCompleted', control });
 
-  const onSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
-    evt.preventDefault();
-    try {
-      handleSubmit((editTaskValues) => {
-        loadEditTask(editTaskValues).then(() => {
-          redirectRoot(ROOT);
-        });
-        reset();
-      })();
-    } catch {
-      console.log('Error of changing data!');
-    }
-  };
+  const onSubmit = useCallback(
+    (evt: MouseEvent<HTMLButtonElement>) => {
+      evt.preventDefault();
+      try {
+        handleSubmit((editTaskValues) => {
+          loadEditTask(editTaskValues).then(() => {
+            redirectRoot(ROOT);
+          });
+          reset();
+        })();
+      } catch {
+        console.log('Error of changing data!');
+      }
+    },
+    [handleSubmit]
+  );
 
-  const onInputTaskName = (taskName: string) => setValue('name', taskName);
-  const onInputTaskDescription = (taskInfo: string) => setValue('info', taskInfo);
-  const onTaskCheckImportant = (taskCheckImportant: boolean) => setValue('isImportant', taskCheckImportant);
-  const onTaskCheckCompleted = (taskCheckCompleted: boolean) => {
-    if (taskCheckCompleted) {
-      setValue('isImportant', false);
-    }
-    setValue('isCompleted', taskCheckCompleted);
-  };
+  const onInputTaskName = useCallback(
+    (taskName: string) => {
+      setValue('name', taskName);
+    },
+    [setValue]
+  );
+
+  const onInputTaskDescription = useCallback(
+    (taskInfo: string) => {
+      setValue('info', taskInfo);
+    },
+    [setValue]
+  );
+
+  const onTaskCheckImportant = useCallback(
+    (taskCheckImportant: boolean) => {
+      setValue('isImportant', taskCheckImportant);
+    },
+    [setValue]
+  );
+
+  const onTaskCheckCompleted = useCallback(
+    (taskCheckCompleted: boolean) => {
+      if (taskCheckCompleted) {
+        setValue('isImportant', false);
+      }
+      setValue('isCompleted', taskCheckCompleted);
+    },
+    [setValue]
+  );
 
   useEffect((): void => {
     if (editTaskProps) {

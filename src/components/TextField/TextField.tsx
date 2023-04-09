@@ -1,8 +1,8 @@
-import React, { ChangeEventHandler } from 'react';
+import React, { ChangeEventHandler, memo } from 'react';
 import { TextFieldProps } from './TextField.types';
 import './TextField.css';
 
-export function TextField({
+function TextFieldProto({
   label,
   placeholder,
   containerClassName = '',
@@ -30,3 +30,5 @@ export function TextField({
     </div>
   );
 }
+
+export const TextField = memo(TextFieldProto);

@@ -1,7 +1,6 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useCallback } from 'react';
 import { observer } from 'mobx-react-lite';
 import { Controller, useForm } from 'react-hook-form';
-// import { yupResolver } from '@hookform/resolvers/yup';
 import { StatusFilter } from '../StatusFilter';
 import { DEFAULT_SEARCH_FORM } from './SearchForm.constants';
 import { SearchInput } from 'components/index';
@@ -14,19 +13,35 @@ function SearchFormProto() {
 
   const { control, handleSubmit, setValue } = useForm<SearchFormEntity>({
     defaultValues: DEFAULT_SEARCH_FORM,
-    // resolver: yupResolver(SEARCH_INPUT_VALIDATION_SCHEMA),
   });
 
-  const onSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
-    evt.preventDefault();
-    handleSubmit((form) => {
-      loadTasks(form);
-    })();
-  };
+  const onSubmit = useCallback(
+    (evt: MouseEvent<HTMLButtonElement>) => {
+      evt.preventDefault();
+      handleSubmit((form) => {
+        loadTasks(form);
+      })();
+    },
+    [handleSubmit]
+  );
 
-  const onTasksTypeChange = (tasksType: FiltersType) => setValue('filterType', tasksType);
-  const onSearchInputChange = (searchText: string) => setValue('searchValue', searchText);
-  const onSearchInputReset = () => setValue('searchValue', '');
+  const onTasksTypeChange = useCallback(
+    (tasksType: FiltersType) => {
+      setValue('filterType', tasksType);
+    },
+    [setValue]
+  );
+
+  const onSearchInputChange = useCallback(
+    (searchText: string) => {
+      setValue('searchValue', searchText);
+    },
+    [setValue]
+  );
+
+  const onSearchInputReset = useCallback(() => {
+    setValue('searchValue', '');
+  }, [setValue]);
 
   return (
     <form className="search-form d-flex justify-content-between">

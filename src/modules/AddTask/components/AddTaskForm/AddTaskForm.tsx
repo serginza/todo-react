@@ -1,4 +1,4 @@
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useCallback } from 'react';
 import { observer } from 'mobx-react';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -20,23 +20,43 @@ function AddTaskFormProto() {
     resolver: yupResolver(ADD_TASK_INPUT_VALIDATION_SCHEMA),
   });
 
-  const onSubmit = (evt: MouseEvent<HTMLButtonElement>) => {
-    evt.preventDefault();
-    try {
-      handleSubmit((addTaskPaarams) => {
-        loadAddTask(addTaskPaarams).then(() => {
-          redirectRoot(ROOT);
-        });
-        reset();
-      })();
-    } catch {
-      console.log('Error of requiring data!');
-    }
-  };
+  const onSubmit = useCallback(
+    (evt: MouseEvent<HTMLButtonElement>) => {
+      evt.preventDefault();
+      try {
+        handleSubmit((addTaskPaarams) => {
+          loadAddTask(addTaskPaarams).then(() => {
+            redirectRoot(ROOT);
+          });
+          reset();
+        })();
+      } catch {
+        console.log('Error of requiring data!');
+      }
+    },
+    [handleSubmit]
+  );
 
-  const onInputTaskName = (taskName: string) => setValue('name', taskName);
-  const onInputTaskDescription = (taskInfo: string) => setValue('info', taskInfo);
-  const onTaskCheckImportant = (taskCheckImportant: boolean) => setValue('isImportant', taskCheckImportant);
+  const onInputTaskName = useCallback(
+    (taskName: string) => {
+      setValue('name', taskName);
+    },
+    [setValue]
+  );
+
+  const onInputTaskDescription = useCallback(
+    (taskInfo: string) => {
+      setValue('info', taskInfo);
+    },
+    [setValue]
+  );
+
+  const onTaskCheckImportant = useCallback(
+    (taskCheckImportant: boolean) => {
+      setValue('isImportant', taskCheckImportant);
+    },
+    [setValue]
+  );
 
   return (
     <form className="add-task-form d-flex flex-column justify-content-center">

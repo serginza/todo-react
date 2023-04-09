@@ -1,7 +1,7 @@
-import React, { ChangeEventHandler } from 'react';
+import React, { ChangeEventHandler, memo } from 'react';
 import { CheckboxProps } from './Checkbox.types';
 
-export function Checkbox({ label, checked, onChange, disabled, containerClassName = '' }: CheckboxProps) {
+function CheckboxProto({ label, checked, onChange, disabled, containerClassName = '' }: CheckboxProps) {
   const onCheckboxChange: ChangeEventHandler<HTMLInputElement> = (evt) => onChange(evt.target.checked);
 
   return (
@@ -21,3 +21,5 @@ export function Checkbox({ label, checked, onChange, disabled, containerClassNam
     </div>
   );
 }
+
+export const Checkbox = memo(CheckboxProto);
