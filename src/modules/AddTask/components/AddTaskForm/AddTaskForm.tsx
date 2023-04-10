@@ -23,16 +23,12 @@ function AddTaskFormProto() {
   const onSubmit = useCallback(
     (evt: MouseEvent<HTMLButtonElement>) => {
       evt.preventDefault();
-      try {
-        handleSubmit((addTaskPaarams) => {
-          loadAddTask(addTaskPaarams).then(() => {
-            redirectRoot(ROOT);
-          });
-          reset();
-        })();
-      } catch {
-        console.log('Error of requiring data!');
-      }
+      handleSubmit((addTaskPaarams) => {
+        loadAddTask(addTaskPaarams).then(() => {
+          redirectRoot(ROOT);
+        });
+        reset();
+      })();
     },
     [handleSubmit]
   );

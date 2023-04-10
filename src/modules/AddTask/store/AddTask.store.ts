@@ -1,5 +1,6 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { PrivateFieldAddTaskProps } from './AddTask.store.types';
+import { ERROR_SENDING_DATA_MSG } from './AddTask.store.constants';
 import { ActionTaskEntity } from 'domains/index';
 import { TaskAgentInstance } from 'http/agent';
 
@@ -43,10 +44,9 @@ class AddTaskStore {
         await TaskAgentInstance.createTask(addTaskValues);
 
         this._addTaskProps = addTaskValues;
-        console.log(addTaskValues);
       }
     } catch {
-      console.log('Error of receiving data!');
+      throw new Error(ERROR_SENDING_DATA_MSG);
     } finally {
       this.isAddTaskLoading = false;
     }

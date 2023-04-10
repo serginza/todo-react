@@ -25,16 +25,12 @@ function EditTaskFormProto() {
   const onSubmit = useCallback(
     (evt: MouseEvent<HTMLButtonElement>) => {
       evt.preventDefault();
-      try {
-        handleSubmit((editTaskValues) => {
-          loadEditTask(editTaskValues).then(() => {
-            redirectRoot(ROOT);
-          });
-          reset();
-        })();
-      } catch {
-        console.log('Error of changing data!');
-      }
+      handleSubmit((editTaskValues) => {
+        loadEditTask(editTaskValues).then(() => {
+          redirectRoot(ROOT);
+        });
+        reset();
+      })();
     },
     [handleSubmit]
   );

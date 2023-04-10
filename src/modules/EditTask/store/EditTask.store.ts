@@ -1,5 +1,6 @@
 import { action, computed, makeObservable, observable } from 'mobx';
 import { PrivateFieldEditTaskProps } from './EditTask.store.types';
+import { ERROR_CHANGING_DATA_MSG, ERROR_RECEIVING_EDIT_TASK_DATA_MSG } from './EditTask.store.constants';
 import { ActionTaskEntity } from 'domains/index';
 import { mapToInternalTask } from 'helpers/mappers';
 import { TaskAgentInstance } from 'http/agent';
@@ -58,15 +59,15 @@ class EditTaskStore {
   getEditProps = async (editTaskId: string | null) => {
     this.isEditTaskLoading = true;
     try {
+      if (!editTaskId) {
+        throw new Error(ERROR_RECEIVING_EDIT_TASK_DATA_MSG);
+      }
       const taskEditResult = await TaskAgentInstance.getTask(editTaskId);
 
-      if (taskEditResult) {
-        this.editTaskProps = mapToInternalTask(taskEditResult);
-      } else {
-        return null;
-      }
+      this.editTaskProps = mapToInternalTask(taskEditResult);
     } catch {
-      console.log('Error of receiving data for edit task!');
+      this.editTaskProps = null;
+      throw new Error(ERROR_RECEIVING_EDIT_TASK_DATA_MSG);
     } finally {
       this.isEditTaskLoading = false;
     }
@@ -75,15 +76,14 @@ class EditTaskStore {
   loadEditTask = async (editTask: ActionTaskEntity) => {
     this.isEditTaskLoading = true;
     try {
-      if (editTask) {
-        this.editTaskProps = editTask;
+      if (!editTask) {
+        throw new Error(ERROR_CHANGING_DATA_MSG);
       }
       await TaskAgentInstance.updateTask(this.taskId, editTask);
 
       this.editTaskProps = editTask;
-      console.log(editTask);
     } catch {
-      console.log('Error of changing task!');
+      throw new Error(ERROR_CHANGING_DATA_MSG);
     } finally {
       this.isEditTaskLoading = false;
     }

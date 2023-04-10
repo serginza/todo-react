@@ -78,7 +78,6 @@ class TasksStore {
     try {
       if (searchValues) {
         this._searchForm = searchValues;
-        console.log(searchValues);
       }
 
       const { tasks, tasksStats } = await this.getTasks(this._searchForm);
@@ -88,7 +87,6 @@ class TasksStore {
     } catch {
       this.tasks = null;
       this.tasksStats = null;
-      console.log('Error of update tasks list!');
     } finally {
       this.isTasksLoading = false;
     }
@@ -105,11 +103,9 @@ class TasksStore {
 
       this.tasks = tasks;
       this.tasksStats = tasksStats;
-      console.log(`Task id = ${taskId}, important = ${!currentStatus}`);
     } catch {
       this.tasks = null;
       this.tasksStats = null;
-      console.log('Error of change "Important check"!');
     } finally {
       this.isTasksLoading = false;
     }
@@ -127,11 +123,9 @@ class TasksStore {
 
       this.tasks = tasks;
       this.tasksStats = tasksStats;
-      console.log(`Task id = ${taskId}, comlpete = ${!currentStatus}`);
     } catch {
       this.tasks = null;
       this.tasksStats = null;
-      console.log('Error of change "Complete check"!');
     } finally {
       this.isTasksLoading = false;
     }
@@ -146,11 +140,9 @@ class TasksStore {
 
       this.tasks = tasks;
       this.tasksStats = tasksStats;
-      console.log(`Task id = ${taskId} deleted!`);
     } catch {
       this.tasks = null;
       this.tasksStats = null;
-      console.log('Error of deleting data!');
     } finally {
       this.isTasksLoading = false;
     }

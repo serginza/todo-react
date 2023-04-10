@@ -7,7 +7,7 @@ function TasksStatsProto() {
   const { tasksStats, isTasksLoading } = TasksStoreInstance;
 
   return (
-    <div className="d-flex w-100 justify-content-between">
+    <div className="mb-2 d-flex w-100 justify-content-between">
       {tasksStats ? (
         <>
           <div>
