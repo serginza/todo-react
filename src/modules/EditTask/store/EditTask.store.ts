@@ -1,9 +1,10 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { PrivateFieldEditTaskProps } from './EditTask.store.types';
-import { ERROR_CHANGING_DATA_MSG, ERROR_RECEIVING_EDIT_TASK_DATA_MSG } from './EditTask.store.constants';
+import { ERROR_CHANGING_DATA_MSG, ERROR_RECEIVING_EDIT_TASK_DATA_MSG } from 'constants/index';
 import { ActionTaskEntity } from 'domains/index';
 import { mapToInternalTask } from 'helpers/mappers';
 import { TaskAgentInstance } from 'http/agent';
+
+export type PrivateFieldEditTaskProps = '_editTaskProps' | '_isEditTaskLoading' | '_taskId';
 
 class EditTaskStore {
   constructor() {

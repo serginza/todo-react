@@ -14,7 +14,7 @@ function TasksListProto() {
         {tasks?.length ? (
           <ul className="list-group todo-list mb-3">
             {tasks.map((task) => (
-              <li key={task.id} className="list-group-item">
+              <li key={task.id} className="list-group-item text-break">
                 <Task
                   key={task.id}
                   task={task}

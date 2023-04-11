@@ -1,8 +1,9 @@
 import { action, makeObservable, observable, computed } from 'mobx';
-import { PrivateFieldProps } from './Task.store.types';
 import { mapToExternalParams, mapToInternalTasks, getInternalInfo } from 'helpers/index';
 import { TaskEntity, TasksStatsEntity, SearchFormEntity } from 'domains/index';
 import { TaskAgentInstance } from 'http/index';
+
+export type PrivateFieldProps = '_tasks' | '_tasksStats' | '_isTasksLoading' | '_searchForm';
 
 class TasksStore {
   constructor() {

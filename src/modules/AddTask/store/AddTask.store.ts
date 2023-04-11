@@ -1,8 +1,9 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { PrivateFieldAddTaskProps } from './AddTask.store.types';
-import { ERROR_SENDING_DATA_MSG } from './AddTask.store.constants';
+import { ERROR_SENDING_DATA_MSG } from 'constants/index';
 import { ActionTaskEntity } from 'domains/index';
 import { TaskAgentInstance } from 'http/agent';
+
+export type PrivateFieldAddTaskProps = '_isAddTaskLoading' | '_addTaskProps';
 
 class AddTaskStore {
   constructor() {
