@@ -4,7 +4,7 @@ import { ActionTaskEntity } from 'domains/index';
 import { mapToInternalTask } from 'helpers/mappers';
 import { TaskAgentInstance } from 'http/agent';
 
-export type PrivateFieldEditTaskProps = '_editTaskProps' | '_isEditTaskLoading' | '_taskId';
+type PrivateFieldEditTaskProps = '_editTaskProps' | '_isEditTaskLoading' | '_taskId';
 
 class EditTaskStore {
   constructor() {

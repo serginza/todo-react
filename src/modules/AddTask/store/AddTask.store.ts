@@ -3,7 +3,7 @@ import { ERROR_SENDING_DATA_MSG } from 'constants/index';
 import { ActionTaskEntity } from 'domains/index';
 import { TaskAgentInstance } from 'http/agent';
 
-export type PrivateFieldAddTaskProps = '_isAddTaskLoading' | '_addTaskProps';
+type PrivateFieldAddTaskProps = '_isAddTaskLoading' | '_addTaskProps';
 
 class AddTaskStore {
   constructor() {

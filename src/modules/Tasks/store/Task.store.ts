@@ -3,7 +3,7 @@ import { mapToExternalParams, mapToInternalTasks, getInternalInfo } from 'helper
 import { TaskEntity, TasksStatsEntity, SearchFormEntity } from 'domains/index';
 import { TaskAgentInstance } from 'http/index';
 
-export type PrivateFieldProps = '_tasks' | '_tasksStats' | '_isTasksLoading' | '_searchForm';
+type PrivateFieldProps = '_tasks' | '_tasksStats' | '_isTasksLoading' | '_searchForm';
 
 class TasksStore {
   constructor() {
