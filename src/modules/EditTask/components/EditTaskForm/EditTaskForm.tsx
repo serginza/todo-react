@@ -13,7 +13,7 @@ import './editTaskForm.css';
 function EditTaskFormProto() {
   const redirectRoot = useNavigate();
 
-  const { editTaskProps, isEditTaskLoading, loadEditTask } = EditTaskInstance;
+  const { editTaskForm, isEditTaskLoading, loadEditTask } = EditTaskInstance;
 
   const { control, handleSubmit, setValue, reset } = useForm<ActionTaskEntity>({
     defaultValues: DEFAULT_EDIT_TASK_FORM,
@@ -67,15 +67,15 @@ function EditTaskFormProto() {
   );
 
   useEffect((): void => {
-    if (editTaskProps) {
-      reset(editTaskProps);
+    if (editTaskForm) {
+      reset(editTaskForm);
     }
-  }, [editTaskProps]);
+  }, [editTaskForm]);
 
   return (
     <form className="edit-task-form d-flex flex-column justify-content-center">
       <Loader isLoading={isEditTaskLoading} variant="circle">
-        {editTaskProps ? (
+        {editTaskForm ? (
           <>
             <Controller
               control={control}

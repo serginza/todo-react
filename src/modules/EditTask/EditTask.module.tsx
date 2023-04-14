@@ -7,7 +7,7 @@ import { EditTaskForm } from './components/EditTaskForm';
 function EditTaskProto({ taskId }: EditTasksId) {
   useEffect(() => {
     EditTaskInstance.taskId = taskId;
-    EditTaskInstance.getEditProps(taskId);
+    EditTaskInstance.getEditForm(taskId);
   }, []);
 
   return <EditTaskForm />;

@@ -1,40 +1,40 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { ERROR_CHANGING_DATA_MSG, ERROR_RECEIVING_EDIT_TASK_DATA_MSG } from 'constants/index';
+import { ERROR_MSG } from 'constants/index';
 import { ActionTaskEntity } from 'domains/index';
 import { mapToInternalTask } from 'helpers/mappers';
 import { TaskAgentInstance } from 'http/agent';
 
-type PrivateFieldEditTaskProps = '_editTaskProps' | '_isEditTaskLoading' | '_taskId';
+type PrivateFieldEditTaskForm = '_editTaskForm' | '_isEditTaskLoading' | '_taskId';
 
 class EditTaskStore {
   constructor() {
-    makeObservable<this, PrivateFieldEditTaskProps>(this, {
-      _editTaskProps: observable,
+    makeObservable<this, PrivateFieldEditTaskForm>(this, {
+      _editTaskForm: observable,
       _isEditTaskLoading: observable,
       _taskId: observable,
 
-      editTaskProps: computed,
+      editTaskForm: computed,
       isEditTaskLoading: computed,
       taskId: computed,
 
       loadEditTask: action,
-      getEditProps: action,
+      getEditForm: action,
     });
   }
 
-  private _editTaskProps: ActionTaskEntity | null = {
+  private _editTaskForm: ActionTaskEntity | null = {
     name: '',
     info: '',
     isImportant: false,
     isCompleted: false,
   };
 
-  get editTaskProps(): ActionTaskEntity | null {
-    return this._editTaskProps;
+  get editTaskForm(): ActionTaskEntity | null {
+    return this._editTaskForm;
   }
 
-  set editTaskProps(value: ActionTaskEntity | null) {
-    this._editTaskProps = value;
+  set editTaskForm(value: ActionTaskEntity | null) {
+    this._editTaskForm = value;
   }
 
   private _isEditTaskLoading = false;
@@ -57,18 +57,18 @@ class EditTaskStore {
     this._taskId = id;
   }
 
-  getEditProps = async (editTaskId: string | null) => {
+  getEditForm = async (editTaskId: string | null) => {
     this.isEditTaskLoading = true;
     try {
       if (!editTaskId) {
-        throw new Error(ERROR_RECEIVING_EDIT_TASK_DATA_MSG);
+        throw new Error(ERROR_MSG.RECEIVING_EDIT_TASK_DATA);
       }
       const taskEditResult = await TaskAgentInstance.getTask(editTaskId);
 
-      this.editTaskProps = mapToInternalTask(taskEditResult);
+      this.editTaskForm = mapToInternalTask(taskEditResult);
     } catch {
-      this.editTaskProps = null;
-      throw new Error(ERROR_RECEIVING_EDIT_TASK_DATA_MSG);
+      this.editTaskForm = null;
+      throw new Error(ERROR_MSG.RECEIVING_EDIT_TASK_DATA);
     } finally {
       this.isEditTaskLoading = false;
     }
@@ -78,13 +78,14 @@ class EditTaskStore {
     this.isEditTaskLoading = true;
     try {
       if (!editTask) {
-        throw new Error(ERROR_CHANGING_DATA_MSG);
+        throw new Error(ERROR_MSG.CHANGING_DATA);
       }
       await TaskAgentInstance.updateTask(this.taskId, editTask);
 
-      this.editTaskProps = editTask;
+      this.editTaskForm = editTask;
     } catch {
-      throw new Error(ERROR_CHANGING_DATA_MSG);
+      this.editTaskForm = null;
+      throw new Error(ERROR_MSG.CHANGING_DATA);
     } finally {
       this.isEditTaskLoading = false;
     }

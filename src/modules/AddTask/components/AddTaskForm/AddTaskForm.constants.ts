@@ -1,5 +1,6 @@
 import * as Yup from 'yup';
 import { ActionTaskEntity } from 'domains/index';
+import { ERROR_VALIDATION_MSG } from 'constants/index';
 
 export const DEFAULT_ADD_TASK_FORM: ActionTaskEntity = {
   name: '',
@@ -9,6 +10,6 @@ export const DEFAULT_ADD_TASK_FORM: ActionTaskEntity = {
 };
 
 export const ADD_TASK_INPUT_VALIDATION_SCHEMA = Yup.object().shape({
-  name: Yup.string().required('Search Input is required!').min(3, 'Task name must be at least 3 characters'),
-  info: Yup.string().required('Search Input is required!'),
+  name: Yup.string().required(ERROR_VALIDATION_MSG.REQUIRED_MSG).min(3, ERROR_VALIDATION_MSG.MIN_CHARACTERS_MSG),
+  info: Yup.string().required(ERROR_VALIDATION_MSG.REQUIRED_MSG),
 });

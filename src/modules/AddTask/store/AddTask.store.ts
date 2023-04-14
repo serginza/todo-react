@@ -1,14 +1,14 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { ERROR_SENDING_DATA_MSG } from 'constants/index';
+import { ERROR_MSG } from 'constants/index';
 import { ActionTaskEntity } from 'domains/index';
 import { TaskAgentInstance } from 'http/agent';
 
-type PrivateFieldAddTaskProps = '_isAddTaskLoading' | '_addTaskProps';
+type PrivateFieldAddTaskForm = '_isAddTaskLoading' | '_addTaskForm';
 
 class AddTaskStore {
   constructor() {
-    makeObservable<this, PrivateFieldAddTaskProps>(this, {
-      _addTaskProps: observable,
+    makeObservable<this, PrivateFieldAddTaskForm>(this, {
+      _addTaskForm: observable,
       _isAddTaskLoading: observable,
 
       isAddTaskLoading: computed,
@@ -17,15 +17,15 @@ class AddTaskStore {
     });
   }
 
-  private _addTaskProps: ActionTaskEntity | null = {
+  private _addTaskForm: ActionTaskEntity | null = {
     name: '',
     info: '',
     isImportant: false,
     isCompleted: false,
   };
 
-  get addTaskProps(): ActionTaskEntity | null {
-    return this._addTaskProps;
+  get addTaskForm(): ActionTaskEntity | null {
+    return this._addTaskForm;
   }
 
   private _isAddTaskLoading = false;
@@ -44,10 +44,11 @@ class AddTaskStore {
       if (addTaskValues) {
         await TaskAgentInstance.createTask(addTaskValues);
 
-        this._addTaskProps = addTaskValues;
+        this._addTaskForm = addTaskValues;
       }
     } catch {
-      throw new Error(ERROR_SENDING_DATA_MSG);
+      this._addTaskForm = null;
+      throw new Error(ERROR_MSG.SENDING_DATA);
     } finally {
       this.isAddTaskLoading = false;
     }
