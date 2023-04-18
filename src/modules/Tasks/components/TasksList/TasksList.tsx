@@ -1,20 +1,27 @@
 import { observer } from 'mobx-react';
 import React from 'react';
+import { Box, Typography } from '@mui/material';
 import { Task } from '../Task';
+import { StyledButton, StyledLink, StyledList } from './TasksList.styles';
 import { TasksStoreInstance } from 'modules/Tasks/store';
 import { Loader } from 'components/Loader';
-import './TasksList.css';
+import { PATH_LIST } from 'constants/path';
 
 function TasksListProto() {
   const { isTasksLoading, tasks, changeTaskImportant, deleteTask, changeTaskCompleted } = TasksStoreInstance;
 
   return (
-    <div className="tasks-wrapper d-flex align-items-center justify-content-center">
-      <Loader isLoading={isTasksLoading}>
-        {tasks?.length ? (
-          <ul className="list-group todo-list mb-3">
-            {tasks.map((task) => (
-              <li key={task.id} className="list-group-item text-break">
+    <>
+      <Box
+        display={'flex'}
+        flexDirection={'column'}
+        alignItems={'center'}
+        justifyContent={'center'}
+        minHeight={'400px'}>
+        <Loader isLoading={isTasksLoading}>
+          {tasks?.length ? (
+            <StyledList>
+              {tasks.map((task) => (
                 <Task
                   key={task.id}
                   task={task}
@@ -22,14 +29,20 @@ function TasksListProto() {
                   deleteTask={deleteTask}
                   changeTaskCompleted={changeTaskCompleted}
                 />
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>Not found</p>
-        )}
-      </Loader>
-    </div>
+              ))}
+            </StyledList>
+          ) : (
+            <Typography variant="h6" marginBottom={'100px'}>
+              Not found
+            </Typography>
+          )}
+        </Loader>
+      </Box>
+
+      <StyledLink to={PATH_LIST.ADD}>
+        <StyledButton disabled={isTasksLoading}>Add task</StyledButton>
+      </StyledLink>
+    </>
   );
 }
 

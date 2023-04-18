@@ -1,5 +1,6 @@
+import { IconButton, TextField } from '@mui/material';
+import { Clear } from '@mui/icons-material';
 import React, { ChangeEventHandler, memo, MouseEvent } from 'react';
-import './SearchInput.css';
 import { SearchInputProps } from './SearchInput.types';
 
 function SearchInputProto({ onChange, value, onReset, disabled }: SearchInputProps) {
@@ -11,18 +12,21 @@ function SearchInputProto({ onChange, value, onReset, disabled }: SearchInputPro
   };
 
   return (
-    <div className="search-panel">
-      <input
-        disabled={disabled}
-        className="form-control search-input"
-        placeholder="search"
-        onChange={onSearchInputChange}
-        value={value}
-      />
-      <button className="close" onClick={onResetBtnClick}>
-        <i className="fa fa-close"></i>
-      </button>
-    </div>
+    <TextField
+      fullWidth
+      size="small"
+      onChange={onSearchInputChange}
+      placeholder={'Search'}
+      value={value}
+      disabled={disabled}
+      InputProps={{
+        endAdornment: (
+          <IconButton onClick={onResetBtnClick}>
+            <Clear />
+          </IconButton>
+        ),
+      }}
+    />
   );
 }
 

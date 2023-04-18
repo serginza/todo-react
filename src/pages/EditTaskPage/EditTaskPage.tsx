@@ -1,5 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { Typography } from '@mui/material';
 import { EditTask } from 'modules/index';
 import { PageContainer } from 'components/index';
 
@@ -11,7 +12,9 @@ export function EditTaskPage() {
 
   return (
     <PageContainer>
-      <h1 className="text-center">TODO LIST | EDIT TASK {taskId}</h1>
+      <Typography variant="h3" textAlign={'center'}>
+        TODO LIST | EDIT TASK {taskId}
+      </Typography>
       <EditTask taskId={taskId} />
     </PageContainer>
   );

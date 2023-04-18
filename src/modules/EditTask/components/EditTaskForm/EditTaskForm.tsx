@@ -3,12 +3,13 @@ import { Controller, useForm, useWatch } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { Typography } from '@mui/material';
 import { DEFAULT_EDIT_TASK_FORM, EDIT_TASK_INPUT_VALIDATION_SCHEMA } from './EditTaskForm.constants';
+import { StyledBox, StyledButton } from './EditTaskForm.styles';
 import { EditTaskInstance } from 'modules/EditTask/store';
-import { TextField, Checkbox, Loader } from 'components/index';
+import { MaterialTextField, MaterialCheckbox, Loader } from 'components/index';
 import { ROOT } from 'constants/path';
 import { ActionTaskEntity } from 'domains/Task.entity';
-import './editTaskForm.css';
 
 function EditTaskFormProto() {
   const redirectRoot = useNavigate();
@@ -73,21 +74,21 @@ function EditTaskFormProto() {
   }, [editTaskForm]);
 
   return (
-    <form className="edit-task-form d-flex flex-column justify-content-center">
-      <Loader isLoading={isEditTaskLoading} variant="circle">
+    <StyledBox component={'form'}>
+      <Loader isLoading={isEditTaskLoading}>
         {editTaskForm ? (
           <>
             <Controller
               control={control}
               name="name"
               render={({ field, fieldState: { error } }) => (
-                <TextField
+                <MaterialTextField
                   label={'Task name'}
                   onChange={onInputTaskName}
-                  inputType="text"
+                  placeholder={'Buy pizza'}
                   value={field.value}
-                  containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
                   errorText={error?.message}
+                  error
                 />
               )}
             />
@@ -95,13 +96,13 @@ function EditTaskFormProto() {
               control={control}
               name="info"
               render={({ field, fieldState: { error } }) => (
-                <TextField
+                <MaterialTextField
                   label={'What to do(description)'}
                   onChange={onInputTaskDescription}
-                  inputType={'text'}
+                  placeholder={'Destroy pizza with friends'}
                   value={field.value}
-                  containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
                   errorText={error?.message}
+                  error
                 />
               )}
             />
@@ -109,7 +110,7 @@ function EditTaskFormProto() {
               control={control}
               name="isImportant"
               render={({ field }) => (
-                <Checkbox
+                <MaterialCheckbox
                   label={'Important'}
                   onChange={onTaskCheckImportant}
                   checked={field.value}
@@ -121,18 +122,18 @@ function EditTaskFormProto() {
               control={control}
               name="isCompleted"
               render={({ field }) => (
-                <Checkbox label={'Completed'} onChange={onTaskCheckCompleted} checked={field.value} />
+                <MaterialCheckbox label={'Completed'} onChange={onTaskCheckCompleted} checked={field.value} />
               )}
             />
-            <button type="submit" className="btn btn-secondary d-block m1-auto w-100" onClick={onSubmit}>
+            <StyledButton type="submit" onClick={onSubmit}>
               Edit task
-            </button>
+            </StyledButton>
           </>
         ) : (
-          <p>Not found</p>
+          <Typography variant="h5">Not found</Typography>
         )}
       </Loader>
-    </form>
+    </StyledBox>
   );
 }
 

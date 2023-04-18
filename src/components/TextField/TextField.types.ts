@@ -8,4 +8,5 @@ export interface TextFieldProps {
   value?: string;
   onChange: (text: string) => void;
   errorText?: string;
+  error?: boolean;
 }

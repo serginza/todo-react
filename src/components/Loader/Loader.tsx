@@ -1,14 +1,9 @@
+import { CircularProgress } from '@mui/material';
 import React from 'react';
 import { LoaderProps } from './Loader.types';
 
-export function Loader({ isLoading, children, variant = 'circle' }: LoaderProps) {
-  const loaderClass = variant === 'dot' ? 'spinner-grow spinner-grow-sm' : 'spinner-border text-primary';
+export function Loader({ isLoading, children, variant }: LoaderProps) {
+  const loaderSize = variant === 'small' ? '15px' : '40px';
 
-  return isLoading ? (
-    <div className={loaderClass} role="status">
-      <span className="visually-hidden">Loading...</span>
-    </div>
-  ) : (
-    <>{children}</>
-  );
+  return isLoading ? <CircularProgress size={loaderSize} /> : <>{children}</>;
 }

@@ -1,5 +1,7 @@
 import React from 'react';
 import { observer } from 'mobx-react';
+import { Box, ThemeProvider, Typography } from '@mui/material';
+import { TasksStatsTheme } from './TaskStats.styles';
 import { TasksStoreInstance } from 'modules/Tasks/store';
 import { Loader } from 'components/Loader';
 
@@ -7,32 +9,40 @@ function TasksStatsProto() {
   const { tasksStats, isTasksLoading } = TasksStoreInstance;
 
   return (
-    <div className="mb-2 d-flex w-100 justify-content-between">
+    <Box display={'flex'} justifyContent={'space-between'} width={'100%'} mb={'10px'}>
       {tasksStats ? (
         <>
-          <div>
-            Total:
-            <Loader isLoading={isTasksLoading} variant="dot">
-              <span className="badge bg-secondary">{` ${tasksStats.total}`}</span>
+          <Box display={'flex'}>
+            <Typography variant="body1">Total: </Typography>
+            <Loader isLoading={isTasksLoading} variant="small">
+              <ThemeProvider theme={TasksStatsTheme}>
+                <Typography variant="body1">{` ${tasksStats.total}`}</Typography>
+              </ThemeProvider>
             </Loader>
-          </div>
-          <div>
-            Important:
-            <Loader isLoading={isTasksLoading} variant="dot">
-              <span className="badge bg-secondary">{` ${tasksStats.important}`}</span>
+          </Box>
+          <Box display={'flex'}>
+            <Typography variant="body1">Important: </Typography>
+            <Loader isLoading={isTasksLoading} variant="small">
+              <ThemeProvider theme={TasksStatsTheme}>
+                <Typography variant="body1">{` ${tasksStats.important}`}</Typography>
+              </ThemeProvider>
             </Loader>
-          </div>
-          <div>
-            Done:
-            <Loader isLoading={isTasksLoading} variant="dot">
-              <span className="badge bg-secondary">{` ${tasksStats.done}`}</span>
+          </Box>
+          <Box display={'flex'}>
+            <Typography variant="body1">Done: </Typography>
+            <Loader isLoading={isTasksLoading} variant="small">
+              <ThemeProvider theme={TasksStatsTheme}>
+                <Typography variant="body1">{` ${tasksStats.done}`}</Typography>
+              </ThemeProvider>
             </Loader>
-          </div>
+          </Box>
         </>
       ) : (
-        <p className="d-flex justify-content-center w-100">Stats is not available</p>
+        <Typography variant="h6" display={'flex'} justifyContent={'space-between'} width={'100%'}>
+          Stats is not available
+        </Typography>
       )}
-    </div>
+    </Box>
   );
 }
 

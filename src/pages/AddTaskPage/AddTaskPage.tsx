@@ -1,11 +1,14 @@
 import React from 'react';
+import { Typography } from '@mui/material';
 import { AddTask } from 'modules/index';
 import { PageContainer } from 'components/index';
 
 export function AddTaskPage() {
   return (
     <PageContainer>
-      <h1 className="text-center">TODO LIST | ADD TASK</h1>
+      <Typography variant="h3" textAlign={'center'}>
+        TODO LIST | ADD TASK
+      </Typography>
       <AddTask />
     </PageContainer>
   );

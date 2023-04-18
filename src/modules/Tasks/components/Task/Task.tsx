@@ -1,8 +1,13 @@
 import React from 'react';
+import { Box, ThemeProvider, Typography } from '@mui/material';
+import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import DoneIcon from '@mui/icons-material/Done';
+import DeleteIcon from '@mui/icons-material/Delete';
+import EditIcon from '@mui/icons-material/Edit';
 import { Link } from 'react-router-dom';
+import { TaskTheme, TaskDoneTheme, TaskImportantTheme, StyledButton, StyledBox } from './Task.styles';
 import { TaskProps } from './Task.types';
 import { EDIT, ROOT } from 'constants/index';
-import './Task.css';
 
 export function Task({ task, changeTaskImportant, changeTaskCompleted, deleteTask }: TaskProps) {
   const { name, info, isImportant, isDone, id } = task;
@@ -20,51 +25,37 @@ export function Task({ task, changeTaskImportant, changeTaskCompleted, deleteTas
   };
 
   return (
-    <div>
-      <div className="task mb-2">
-        <p
-          className={`task__label ${isDone ? 'text-decoration-line-through text-secondary' : ''} ${
-            isImportant ? 'text-success fw-bold' : ''
-          }`}>
-          {name}
-        </p>
-
-        <div className="task__btns">
-          <button
-            type="button"
-            className={`task__btn btn ${
-              isImportant ? 'btn-success' : 'btn-outline-success'
-            } btn-sm float-right btn-important`}
+    <StyledBox>
+      <Box display={'flex'} justifyContent={'space-between'} alignItems={'center'} marginBottom={2}>
+        <ThemeProvider theme={isDone ? TaskDoneTheme : isImportant ? TaskImportantTheme : TaskTheme}>
+          <Typography variant="body1">{name}</Typography>
+        </ThemeProvider>
+        <Box display={'flex'} justifyContent={'space-between'} minWidth={'140px'}>
+          <StyledButton
+            color="warning"
             disabled={isDone}
-            onClick={onBtnImportantTask}>
-            <i className="fa fa-exclamation" />
-          </button>
+            onClick={onBtnImportantTask}
+            variant={isImportant ? 'contained' : 'outlined'}>
+            <PriorityHighIcon />
+          </StyledButton>
 
-          <button
-            type="button"
-            className={`task__btn btn ${isDone ? 'btn-danger' : 'btn-outline-danger'} btn-sm float-right`}
-            onClick={onBtnDoneTask}>
-            <i className="fa fa-check" />
-          </button>
+          <StyledButton color="success" onClick={onBtnDoneTask} variant={isDone ? 'contained' : 'outlined'}>
+            <DoneIcon />
+          </StyledButton>
 
-          <button
-            type="button"
-            className="task__btn btn btn-outline-danger btn-sm float-right btn-delete"
-            onClick={onBtnDeleteTask}>
-            <i className="fa fa-trash-o" />
-          </button>
-
-          <Link className="task__btn btn btn-outline-secondary btn-sm float-right" to={`${ROOT}${EDIT}/${id}`}>
-            <i className="fa fa-pencil" />
+          <StyledButton color="error" onClick={onBtnDeleteTask} variant={'outlined'}>
+            <DeleteIcon />
+          </StyledButton>
+          <Link to={`${ROOT}${EDIT}/${id}`}>
+            <StyledButton color="inherit" variant={'outlined'}>
+              <EditIcon />
+            </StyledButton>
           </Link>
-        </div>
-      </div>
-      <p
-        className={`${isDone ? 'text-decoration-line-through text-secondary' : ''} ${
-          isImportant ? 'text-success fw-bold' : ''
-        }`}>
-        {info}
-      </p>
-    </div>
+        </Box>
+      </Box>
+      <ThemeProvider theme={isDone ? TaskDoneTheme : isImportant ? TaskImportantTheme : TaskTheme}>
+        <Typography variant="body1">{info}</Typography>
+      </ThemeProvider>
+    </StyledBox>
   );
 }

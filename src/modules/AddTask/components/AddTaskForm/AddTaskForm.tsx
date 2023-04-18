@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AddTaskInstance } from '../../store';
 import { DEFAULT_ADD_TASK_FORM, ADD_TASK_INPUT_VALIDATION_SCHEMA } from './AddTaskForm.constants';
-import { TextField, Checkbox, Loader } from 'components/index';
+import { StyledBox, StyledButton } from './AddTaskForm.styles';
+import { MaterialTextField, MaterialCheckbox, Loader } from 'components/index';
 import { ROOT } from 'constants/index';
 import { ActionTaskEntity } from 'domains/Task.entity';
-import './AddPageForm.css';
 
 function AddTaskFormProto() {
   const redirectRoot = useNavigate();
@@ -55,20 +55,19 @@ function AddTaskFormProto() {
   );
 
   return (
-    <form className="add-task-form d-flex flex-column justify-content-center">
-      <Loader isLoading={isAddTaskLoading} variant="circle">
+    <StyledBox component="form">
+      <Loader isLoading={isAddTaskLoading}>
         <Controller
           control={control}
           name="name"
           render={({ field, fieldState: { error } }) => (
-            <TextField
+            <MaterialTextField
               label={'Task name'}
               onChange={onInputTaskName}
-              placeholder={'test'}
-              inputType="text"
+              placeholder={'Buy pizza'}
               value={field.value}
-              containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
               errorText={error?.message}
+              error
             />
           )}
         />
@@ -76,27 +75,28 @@ function AddTaskFormProto() {
           control={control}
           name="info"
           render={({ field, fieldState: { error } }) => (
-            <TextField
+            <MaterialTextField
               label={'What to do(description)'}
               onChange={onInputTaskDescription}
-              placeholder={'test description'}
-              inputType="text"
+              placeholder={'Destroy pizza with friends'}
               value={field.value}
-              containerClassName={`${error?.message ? 'on-add-input-invalid' : ''}`}
               errorText={error?.message}
+              error
             />
           )}
         />
         <Controller
           control={control}
           name="isImportant"
-          render={({ field }) => <Checkbox label={'Important'} onChange={onTaskCheckImportant} checked={field.value} />}
+          render={({ field }) => (
+            <MaterialCheckbox label={'Important'} onChange={onTaskCheckImportant} checked={field.value} />
+          )}
         />
-        <button type="submit" className="btn btn-secondary d-block m1-auto w-100" onClick={onSubmit}>
+        <StyledButton fullWidth type="submit" onClick={onSubmit}>
           Add task
-        </button>
+        </StyledButton>
       </Loader>
-    </form>
+    </StyledBox>
   );
 }
 

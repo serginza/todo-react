@@ -1,34 +1,21 @@
 import React, { ChangeEventHandler, memo } from 'react';
+import { TextField } from '@mui/material';
 import { TextFieldProps } from './TextField.types';
-import './TextField.css';
 
-function TextFieldProto({
-  label,
-  placeholder,
-  containerClassName = '',
-  inputType,
-  value,
-  onChange,
-  errorText,
-}: TextFieldProps) {
+function MaterialTextFieldProto({ label, placeholder, value, onChange, errorText }: TextFieldProps) {
   const onInputChange: ChangeEventHandler<HTMLInputElement> = (evt) => onChange(evt.target.value);
 
   return (
-    <div className={`mb-3 w-100 ${containerClassName}`}>
-      <label htmlFor={label} className="form-label">
-        {label}
-      </label>
-      <input
-        type={inputType}
-        className="form-control"
-        id={label}
-        placeholder={placeholder}
-        value={value}
-        onChange={onInputChange}
-      />
-      {errorText && <div className="invalid">{errorText}</div>}
-    </div>
+    <TextField
+      fullWidth
+      label={label}
+      onChange={onInputChange}
+      placeholder={placeholder}
+      value={value}
+      helperText={errorText}
+      error={errorText ? true : false}
+    />
   );
 }
 
-export const TextField = memo(TextFieldProto);
+export const MaterialTextField = memo(MaterialTextFieldProto);

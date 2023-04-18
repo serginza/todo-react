@@ -1,17 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Typography } from '@mui/material';
 import { Tasks } from 'modules/index';
 import { PageContainer } from 'components/index';
-import { PATH_LIST } from 'constants/index';
 
 export function TasksPage() {
   return (
     <PageContainer>
-      <h1>TODO LIST</h1>
+      <Typography variant="h3">TODO LIST</Typography>
       <Tasks />
-      <Link className="btn btn-secondary d-block ml-auto" to={PATH_LIST.ADD}>
-        Add task
-      </Link>
     </PageContainer>
   );
 }

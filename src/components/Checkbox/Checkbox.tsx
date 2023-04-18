@@ -1,25 +1,16 @@
 import React, { ChangeEventHandler, memo } from 'react';
+import { Checkbox, FormControlLabel } from '@mui/material';
 import { CheckboxProps } from './Checkbox.types';
 
-function CheckboxProto({ label, checked, onChange, disabled, containerClassName = '' }: CheckboxProps) {
+function MaterialCheckboxProto({ label, checked, onChange, disabled }: CheckboxProps) {
   const onCheckboxChange: ChangeEventHandler<HTMLInputElement> = (evt) => onChange(evt.target.checked);
 
   return (
-    <div className={`form-check mb-3 ${containerClassName}`}>
-      <input
-        className="form-check-input"
-        type="checkbox"
-        value=""
-        id={label}
-        disabled={disabled}
-        checked={checked}
-        onChange={onCheckboxChange}
-      />
-      <label className="form-check-label" htmlFor={label}>
-        {label}
-      </label>
-    </div>
+    <FormControlLabel
+      control={<Checkbox onChange={onCheckboxChange} checked={checked} disabled={disabled} />}
+      label={label}
+    />
   );
 }
 
-export const Checkbox = memo(CheckboxProto);
+export const MaterialCheckbox = memo(MaterialCheckboxProto);
