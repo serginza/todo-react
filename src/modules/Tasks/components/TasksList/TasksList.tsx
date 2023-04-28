@@ -2,9 +2,10 @@ import { observer } from 'mobx-react';
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { Task } from '../Task';
-import { StyledButton, StyledLink, StyledList } from './TasksList.styles';
+import { StyledLink, StyledList } from './TasksList.styles';
 import { TasksStoreInstance } from 'modules/Tasks/store';
 import { Loader } from 'components/Loader';
+import { ActionButton } from 'components/ActionButton';
 import { PATH_LIST } from 'constants/path';
 
 function TasksListProto() {
@@ -40,7 +41,7 @@ function TasksListProto() {
       </Box>
 
       <StyledLink to={PATH_LIST.ADD}>
-        <StyledButton disabled={isTasksLoading}>Add task</StyledButton>
+        <ActionButton label="Add Task" type="button" disabled={isTasksLoading}></ActionButton>
       </StyledLink>
     </>
   );

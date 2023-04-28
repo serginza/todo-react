@@ -1,0 +1,45 @@
+{
+  "tasks": [
+    {
+      "name": "todo-app",
+      "version": "1.0.0",
+      "lockfileVersion": 3,
+      "requires": true
+    },
+    {
+      "name": "Buy pizza",
+      "id": "1",
+      "info": "Destroy pizza",
+      "isImportant": true,
+      "isDone": true
+    },
+    {
+      "name": "sdvsd",
+      "id": "2",
+      "info": "Lorem ipsum dolor",
+      "isImportant": true,
+      "isDone": true
+    },
+    {
+      "name": "sdvsd",
+      "id": "3",
+      "info": "Lorem ipsum dolor",
+      "isImportant": true,
+      "isDone": false
+    },
+    {
+      "name": "sdvsergergerd",
+      "id": "4",
+      "info": "Lorem ipsum dologwergwrgwergr",
+      "isImportant": true,
+      "isDone": false
+    },
+    {
+      "name": "sdvsdccc222",
+      "id": "2",
+      "info": "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae maxime ducimus ex temporibus reiciendis dolor laboriosam molestias, debitis officiis cupiditate.",
+      "isImportant": false,
+      "isDone": false
+    }
+  ]
+}

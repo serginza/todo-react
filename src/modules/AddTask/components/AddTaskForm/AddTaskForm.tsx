@@ -5,10 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { AddTaskInstance } from '../../store';
 import { DEFAULT_ADD_TASK_FORM, ADD_TASK_INPUT_VALIDATION_SCHEMA } from './AddTaskForm.constants';
-import { StyledBox, StyledButton } from './AddTaskForm.styles';
+import { StyledBox } from './AddTaskForm.styles';
 import { MaterialTextField, MaterialCheckbox, Loader } from 'components/index';
 import { ROOT } from 'constants/index';
 import { ActionTaskEntity } from 'domains/Task.entity';
+import { ActionButton } from 'components/ActionButton';
 
 function AddTaskFormProto() {
   const redirectRoot = useNavigate();
@@ -92,9 +93,7 @@ function AddTaskFormProto() {
             <MaterialCheckbox label={'Important'} onChange={onTaskCheckImportant} checked={field.value} />
           )}
         />
-        <StyledButton fullWidth type="submit" onClick={onSubmit}>
-          Add task
-        </StyledButton>
+        <ActionButton label="Add Task" type="submit" onClick={onSubmit}></ActionButton>
       </Loader>
     </StyledBox>
   );

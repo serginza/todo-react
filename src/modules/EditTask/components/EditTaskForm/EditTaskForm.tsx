@@ -5,11 +5,12 @@ import { observer } from 'mobx-react';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Typography } from '@mui/material';
 import { DEFAULT_EDIT_TASK_FORM, EDIT_TASK_INPUT_VALIDATION_SCHEMA } from './EditTaskForm.constants';
-import { StyledBox, StyledButton } from './EditTaskForm.styles';
+import { StyledBox } from './EditTaskForm.styles';
 import { EditTaskInstance } from 'modules/EditTask/store';
 import { MaterialTextField, MaterialCheckbox, Loader } from 'components/index';
 import { ROOT } from 'constants/path';
 import { ActionTaskEntity } from 'domains/Task.entity';
+import { ActionButton } from 'components/ActionButton';
 
 function EditTaskFormProto() {
   const redirectRoot = useNavigate();
@@ -125,9 +126,7 @@ function EditTaskFormProto() {
                 <MaterialCheckbox label={'Completed'} onChange={onTaskCheckCompleted} checked={field.value} />
               )}
             />
-            <StyledButton type="submit" onClick={onSubmit}>
-              Edit task
-            </StyledButton>
+            <ActionButton label="Edit task" type="submit" onClick={onSubmit}></ActionButton>
           </>
         ) : (
           <Typography variant="h5">Not found</Typography>
